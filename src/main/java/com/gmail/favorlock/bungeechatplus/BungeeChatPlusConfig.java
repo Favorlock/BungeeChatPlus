@@ -11,7 +11,7 @@ public class BungeeChatPlusConfig extends Config {
 		CONFIG_HEADER = "BungeeNoSwear - By Favorlock";
 	}
 	
-	public String Settings_ChatFormat = "&8[&2%server&8] &6%player&7: message";
+	public String Settings_ChatFormat = "&8[&2%server&8] &6%player&7: %message";
 	public boolean Settings_GlobalChatOnLogin = true;
 	public boolean Settings_EnableLog = true;
 	public String Settings_warnmsg = "&4[&6BungeeChat+&4] &4Warned by BungeeChat+!";
