@@ -10,11 +10,11 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
-public class NoSwearListener implements Listener {
+public class BungeeChatPlusListener implements Listener {
 	
 	BungeeChatPlus plugin;
 	
-	public NoSwearListener(BungeeChatPlus plugin) {
+	public BungeeChatPlusListener(BungeeChatPlus plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -24,19 +24,24 @@ public class NoSwearListener implements Listener {
 			return;
 		}
 		
+		
 		plugin.getRegexManager().filterChat(event);
 		
 		if (event.isCancelled() != true) {
 			String message = event.getMessage();
 			ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
 			Chatter chatter = plugin.getChatter(sender.getName());
+			
+			String outputMessage = plugin.getConfig().Settings_ChatFormat;
+			outputMessage = outputMessage.replace("%server", sender.getServer().getInfo().getName());
+			outputMessage = outputMessage.replace("%player", sender.getName());
+			outputMessage = outputMessage.replace("%message", message);
 		
 			for (ProxiedPlayer player : plugin.getPlayers()) {
 				Chatter listener = plugin.getChatter(player.getName());
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
-						player.sendMessage(FontFormat.translateString("&7<&2" + sender.getServer().getInfo().getName() +
-								"&8-&2" + sender.getDisplayName() + "&7> &r" + message));
+						player.sendMessage(FontFormat.translateString(outputMessage));
 					}
 				}
 			}

@@ -7,8 +7,7 @@ import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.gmail.favorlock.bungeechatplus.listeners.NoSwearListener;
-
+import com.gmail.favorlock.bungeechatplus.listeners.BungeeChatPlusListener;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -18,7 +17,7 @@ import net.md_5.bungee.api.plugin.PluginManager;
 
 public class BungeeChatPlus extends Plugin {
 	
-	private NoSwearConfig config;
+	private BungeeChatPlusConfig config;
 	private Map<String,Chatter> chatters;
 	private CommandSender console;
 	private RegexManager regex;
@@ -26,7 +25,7 @@ public class BungeeChatPlus extends Plugin {
 	public void onEnable() {
 		try {
 			// Initialize Config
-			config = new NoSwearConfig(this);
+			config = new BungeeChatPlusConfig(this);
 			config.init();
 		} catch(Exception ex) {
 			getProxyServer().getLogger().log(Level.SEVERE, "FAILED TO LOAD CONFIG!!!", ex);
@@ -56,12 +55,12 @@ public class BungeeChatPlus extends Plugin {
 		regex.getPatterns().clear();
 	}
 	
-	public NoSwearConfig getConfig() {
+	public BungeeChatPlusConfig getConfig() {
 		return config;
 	}
 	
 	private void registerListeners() {
-		getProxyServer().getPluginManager().registerListener(new NoSwearListener(this));
+		getProxyServer().getPluginManager().registerListener(new BungeeChatPlusListener(this));
 	}
 	
 	private void registerCommands() {
