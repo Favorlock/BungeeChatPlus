@@ -26,11 +26,13 @@ import com.gmail.favorlock.bungeechatplus.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.listeners.NoSwearListener;
 
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 public class BungeeChatPlus extends Plugin {
 	
@@ -38,6 +40,7 @@ public class BungeeChatPlus extends Plugin {
 	private Map<String,Chatter> chatters;
 	private CopyOnWriteArrayList<String> rules;
 	private ConcurrentHashMap<String, Pattern> patterns;
+	private CommandSender console;
 	
 	public void onEnable() {
 		try {
@@ -47,6 +50,11 @@ public class BungeeChatPlus extends Plugin {
 			 getProxyServer().getLogger().log(Level.SEVERE, "FAILED TO LOAD CONFIG!!!", ex);
 			 return;
 		}
+		try {
+			console = (CommandSender) Class.forName("net.md_5.bungee.command.ConsoleCommandSender").getDeclaredMethod("getInstance").invoke(null);
+		} catch ( Exception ex ) {
+			ex.printStackTrace();
+		}	
 		chatters = new HashMap<String,Chatter>();
 		rules = new CopyOnWriteArrayList<String>();
 		patterns = new ConcurrentHashMap<String, Pattern>();
@@ -80,6 +88,10 @@ public class BungeeChatPlus extends Plugin {
 		return ProxyServer.getInstance();
 	}
 	
+	public PluginManager getPluginManager() {
+		return ProxyServer.getInstance().getPluginManager();
+	}
+	
 	public Chatter getChatter(String name) {
 		return this.chatters.get(name);
 	}
@@ -107,7 +119,7 @@ public class BungeeChatPlus extends Plugin {
 				output.write("# Each rule must have one 'match' statement and atleast one 'then' statement\n");
 				output.write("# match <regular expression>\n");
 				output.write("# ignore|require <user|permission|string> *(optional)\n");				
-				output.write("# then <replace|rewrite|warn|log|deny|debug|kick> <string>\n");
+				output.write("# then <replace|rewrite|warn|log|deny|debug|kick|console> <string>\n");
 				output.write("\n");
 				output.write("# EXAMPLES\n");
 				output.write("\n");
@@ -130,28 +142,28 @@ public class BungeeChatPlus extends Plugin {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-	    	try {
-	        	BufferedReader input =  new BufferedReader(new FileReader(file));
-	    		String line = null;
-	    		while (( line = input.readLine()) != null) {
-	    			line = line.trim();
-	    			if (!line.matches("^#.*") && !line.matches("")) {
-	    				rules.add(line);
-	    				if (line.startsWith("match ") || line.startsWith("catch ") || line.startsWith("replace ") || line.startsWith("rewrite ")) {
-	    					String[] parts = line.split(" ", 2);
-	    					compilePattern(parts[1]);
-	    				}
-	    			}
-	    		}
-	    		input.close();
-	    	}
-	    	catch (FileNotFoundException e) {
-	    		this.getProxyServer().getLogger().warning("Error reading config file '" + file + "': " + e.getLocalizedMessage());
-	    	}
-	    	catch (Exception e) {
-	    		e.printStackTrace();
-	    	}
 		}
+    	try {
+        	BufferedReader input =  new BufferedReader(new FileReader(file));
+    		String line = null;
+    		while (( line = input.readLine()) != null) {
+    			line = line.trim();
+    			if (!line.matches("^#.*") && !line.matches("")) {
+    				rules.add(line);
+    				if (line.startsWith("match ") || line.startsWith("catch ") || line.startsWith("replace ") || line.startsWith("rewrite ")) {
+    					String[] parts = line.split(" ", 2);
+    					compilePattern(parts[1]);
+    				}
+    			}
+    		}
+    		input.close();
+    	}
+    	catch (FileNotFoundException e) {
+    		this.getProxyServer().getLogger().warning("Error reading config file '" + file + "': " + e.getLocalizedMessage());
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    	}
 	}
 	
     private void compilePattern(String re) {
@@ -235,12 +247,15 @@ public class BungeeChatPlus extends Plugin {
         	Boolean cancel = false;
 	    	Boolean kick = false;
 	    	Boolean warn = false;
+	    	Boolean console = false;
+	    	Boolean consolechain = false;
 	    	Boolean matched = false;
 	    	Boolean log = false;
 	    	Boolean aborted = false;
 	    	Boolean valid;	
 
-	    	// Strings	    	
+	    	// Strings
+	    	String consolecmd = "";
 	    	String regex = "";
 	    	String matched_msg = "";
 	    	String matchLogMsg = "";
@@ -363,7 +378,19 @@ public class BungeeChatPlus extends Plugin {
 						if (line.startsWith("then deny")) {
 							cancel = true;
 			    			valid = true;
-						}			
+						}
+						
+						// aliasing, command and console
+						if (line.startsWith("then console ")) {
+							consolecmd = line.substring(13);
+							consolechain = true;
+							valid = true;
+						}
+						if (line.startsWith("then conchain ")) {
+							consolecmd = line.substring(13);
+							consolechain = true;
+							valid = true;
+						}
 						
 						// Punishment stuffs start here
 						if (line.startsWith("then warn ")) {
@@ -423,7 +450,23 @@ public class BungeeChatPlus extends Plugin {
 	    	// why is this here and not at the end, any particular reason?
 	    	else {
 				event.setMessage(message);
-			}	  		    	
+			}
+	    	if (console) {
+	            consolecmd = consolecmd.replaceAll("&player", player.getName());
+	            consolecmd = consolecmd.replaceAll("&string", message);
+	            logToFile("Sending console command: " + consolecmd);
+	            getPluginManager().dispatchCommand(this.console, consolecmd);
+	    	}
+	    	if (consolechain) {
+				event.setCancelled(true);
+	    		consolecmd = consolecmd.replaceAll("&player", player.getName());
+	    		consolecmd = consolecmd.replaceAll("&string", message);           
+	            String conchain[] = consolecmd.split("\\|");
+	            for (String cmds : conchain) {
+		            logToFile("Sending console command: " + cmds);
+		    		getPluginManager().dispatchCommand(this.console, cmds);
+	            }
+			}
 	    	if (warn) {
 				warnmsg = warnmsg.replaceAll("&([0-9a-fk-or])", "\u00A7$1");
 	    		final ProxiedPlayer fplayer = player;
