@@ -24,7 +24,7 @@ public class NoSwearListener implements Listener {
 			return;
 		}
 		
-		plugin.filterChat(event);
+		plugin.getRegexManager().filterChat(event);
 		
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
