@@ -55,6 +55,13 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>net.craftminecraft.bungee</groupId>
+      <artifactId>bungeeyaml</artifactId>
+      <version>0.0.2-SNAPSHOT</version>
+      <systemPath>${basedir}/lib/bungeeyaml-0.0.2.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
   </dependencies>
   
   <properties>
