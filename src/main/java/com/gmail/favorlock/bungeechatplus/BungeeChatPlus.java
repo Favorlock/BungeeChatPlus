@@ -25,25 +25,33 @@ public class BungeeChatPlus extends Plugin {
 	
 	public void onEnable() {
 		try {
-			 config = new NoSwearConfig(this);
-			 config.init();
+			// Initialize Config
+			config = new NoSwearConfig(this);
+			config.init();
 		} catch(Exception ex) {
-			 getProxyServer().getLogger().log(Level.SEVERE, "FAILED TO LOAD CONFIG!!!", ex);
-			 return;
+			getProxyServer().getLogger().log(Level.SEVERE, "FAILED TO LOAD CONFIG!!!", ex);
+			return;
 		}
 		try {
+			// Initialize Console CommandSender
 			console = (CommandSender) Class.forName("net.md_5.bungee.command.ConsoleCommandSender").getDeclaredMethod("getInstance").invoke(null);
 		} catch ( Exception ex ) {
 			ex.printStackTrace();
-		}	
+		}
+		// Initialize Chatters
 		chatters = new HashMap<String,Chatter>();
+		// Initialize RegexManager
 		regex = new RegexManager(this);
+		// Load Regex Rules
 		regex.loadRules();
+		// Load Listeners
 		registerListeners();
+		// Load Commands
 		registerCommands();
 	}
 	
 	public void onDisable() {
+		// Clear Regex Rules and Patterns
 		regex.getRules().clear();
 		regex.getPatterns().clear();
 	}

@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -325,6 +326,11 @@ public class RegexManager {
 							valid = true;
 						}
 						
+						// cancel
+						if (line.startsWith("then cancel ")) {
+							event.setCancelled(true);
+						}
+						
 						// Punishment stuffs start here
 						if (line.startsWith("then warn ")) {
 							warnmsg = line.substring(10);
@@ -383,6 +389,7 @@ public class RegexManager {
 	    	// why is this here and not at the end, any particular reason?
 	    	else {
 				event.setMessage(message);
+				plugin.getProxyServer().getLogger().log(Level.SEVERE, "" + event.isCancelled());
 			}
 	    	if (console) {
 	            consolecmd = consolecmd.replaceAll("&player", player.getName());
@@ -391,7 +398,6 @@ public class RegexManager {
 	            plugin.getPluginManager().dispatchCommand(plugin.getConsole(), consolecmd);
 	    	}
 	    	if (consolechain) {
-				event.setCancelled(true);
 	    		consolecmd = consolecmd.replaceAll("&player", player.getName());
 	    		consolecmd = consolecmd.replaceAll("&string", message);           
 	            String conchain[] = consolecmd.split("\\|");

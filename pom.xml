@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gmail.favorlock</groupId>
   <artifactId>BungeeChatPlus</artifactId>
-  <version>0.1.4-SNAPSHOT</version>
+  <version>0.1.6-SNAPSHOT</version>
   <build>
     <defaultGoal>clean install</defaultGoal>
     <resources>
