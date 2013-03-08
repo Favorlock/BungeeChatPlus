@@ -24,17 +24,20 @@ public class NoSwearListener implements Listener {
 			return;
 		}
 		
+		plugin.filterChat(event);
+		
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
 		Chatter chatter = plugin.getChatter(sender.getName());
 		
-		for (String word : plugin.getConfig().Filter) {
+/*		for (String word : plugin.getConfig().Filter) {
 			String message2 = message.toLowerCase();
 			if (message2.contains(word.toLowerCase())) {
 				message = message.replaceAll("^(?!.*("+word+")).*$", "****");
 				message = message.replace(word, "****");
 			}
 		}
+*/
 		
 		for (ProxiedPlayer player : plugin.getPlayers()) {
 			Chatter listener = plugin.getChatter(player.getName());

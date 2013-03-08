@@ -14,10 +14,13 @@ public class NoSwearConfig extends Config {
 	}
 	
 	public boolean Settings_GlobalChatOnLogin = true;
-	public ArrayList<String> Filter = new ArrayList<String>(){{
+	public boolean Settings_EnableLog = true;
+	public String Settings_warnmsg = "&4[&6PwnFilter&4] &4Warned by PwnFilter!";
+	public String Settings_kickmsg = "&4[&6PwnFilter&4] &4Kicked by PwnFilter!";
+/*	public ArrayList<String> Filter = new ArrayList<String>(){{
 		add("BadWordOne");
 		add("BadWordTwo");
 		add("BadWordThree");
-	}};
+	}}; */
 
 }

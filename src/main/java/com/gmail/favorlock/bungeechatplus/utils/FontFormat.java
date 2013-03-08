@@ -2,6 +2,7 @@ package com.gmail.favorlock.bungeechatplus.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public enum FontFormat {
 
@@ -31,6 +32,7 @@ public enum FontFormat {
 	private final String value;
 	private static final String characterValue = "\u00a7";
 	private static final Map<String, String> translate;
+	private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf(characterValue) + "[0-9A-FK-OR]");
 
 	private FontFormat(String value) {
 		this.value = characterValue + value;
@@ -76,5 +78,13 @@ public enum FontFormat {
 		}
 		return value;
 	}
+	
+    public static String stripColor(final String input) {
+        if (input == null) {
+            return null;
+        }
+
+        return STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
+    }
 
 }
