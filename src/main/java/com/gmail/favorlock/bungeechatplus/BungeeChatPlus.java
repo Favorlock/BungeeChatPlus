@@ -92,6 +92,8 @@ public class BungeeChatPlus extends Plugin {
 	}
 	
 	public void addChatter(LoginEvent event) {
-		this.chatters.put(event.getConnection().getName(), new Chatter(event.getConnection().getName(), this));
+		if(!this.chatters.containsKey(event.getConnection().getName())) {
+			this.chatters.put(event.getConnection().getName(), new Chatter(event.getConnection().getName(), this));
+		}
 	}
 }
