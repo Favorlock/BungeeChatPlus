@@ -10,11 +10,11 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
-public class BungeeChatPlusListener implements Listener {
+public class ChatListener implements Listener {
 	
 	BungeeChatPlus plugin;
 	
-	public BungeeChatPlusListener(BungeeChatPlus plugin) {
+	public ChatListener(BungeeChatPlus plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -34,7 +34,17 @@ public class BungeeChatPlusListener implements Listener {
 			
 			String outputMessage = plugin.getConfig().Settings_ChatFormat;
 			outputMessage = outputMessage.replace("%server", sender.getServer().getInfo().getName());
-			outputMessage = outputMessage.replace("%player", sender.getName());
+			if (chatter.getPrefix() != null) {
+				outputMessage = outputMessage.replace("%prefix", chatter.getPrefix());
+			} else {
+				outputMessage = outputMessage.replace("%prefix", "");
+			}
+			outputMessage = outputMessage.replace("%player", chatter.getName());
+			if (chatter.getSuffix() != null) {
+				outputMessage = outputMessage.replace("%suffix", chatter.getSuffix());
+			} else {
+				outputMessage = outputMessage.replace("%suffix", "");
+			}
 			outputMessage = outputMessage.replace("%message", message);
 		
 			for (ProxiedPlayer player : plugin.getPlayers()) {

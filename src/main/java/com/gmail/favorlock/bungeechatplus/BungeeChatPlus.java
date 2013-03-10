@@ -7,7 +7,9 @@ import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.gmail.favorlock.bungeechatplus.listeners.BungeeChatPlusListener;
+import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
+import com.gmail.favorlock.bungeechatplus.listeners.PluginMessageListener;
+
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -43,6 +45,8 @@ public class BungeeChatPlus extends Plugin {
 		regex = new RegexManager(this);
 		// Load Regex Rules
 		regex.loadRules();
+		// Register Channels
+		registerChannels();
 		// Load Listeners
 		registerListeners();
 		// Load Commands
@@ -60,11 +64,16 @@ public class BungeeChatPlus extends Plugin {
 	}
 	
 	private void registerListeners() {
-		getProxyServer().getPluginManager().registerListener(new BungeeChatPlusListener(this));
+		getProxyServer().getPluginManager().registerListener(new ChatListener(this));
+		getProxyServer().getPluginManager().registerListener(new PluginMessageListener(this));
 	}
 	
 	private void registerCommands() {
 		getProxyServer().getPluginManager().registerCommand(new Verbose(this));
+	}
+	
+	private void registerChannels() {
+		getProxyServer().registerChannel("BungeeChatPlus");
 	}
 	
 	public ProxyServer getProxyServer() {
