@@ -194,8 +194,8 @@ public class RegexManager {
 	    	String matchLogMsg = "";
 	    	
 	    	// More Strings (for warns, kick, etc)
-	    	String warnmsg = plugin.getConfig().Settings_warnmsg;
-	    	String kickmsg = plugin.getConfig().Settings_kickmsg;
+	    	String warnmsg = plugin.getConfig().Settings_Messages_warnmsg;
+	    	String kickmsg = plugin.getConfig().Settings_Messages_kickmsg;
 	    	
 	    	// Apply rules 
 	    	for (String line : this.rules) {
