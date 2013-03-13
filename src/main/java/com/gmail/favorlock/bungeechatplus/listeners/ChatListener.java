@@ -1,5 +1,7 @@
 package com.gmail.favorlock.bungeechatplus.listeners;
 
+import java.util.ArrayList;
+
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
@@ -13,9 +15,11 @@ import net.md_5.bungee.api.plugin.Listener;
 public class ChatListener implements Listener {
 	
 	BungeeChatPlus plugin;
+	ArrayList<String> servers;
 	
 	public ChatListener(BungeeChatPlus plugin) {
 		this.plugin = plugin;
+		this.servers = plugin.getConfig().FactionServers;
 	}
 	
 	@Subscribe
@@ -24,10 +28,17 @@ public class ChatListener implements Listener {
 			return;
 		}
 		
+		for (String server : servers) {
+			ProxiedPlayer player = (ProxiedPlayer)event.getSender();
+			String playersServer = player.getServer().getInfo().getName();
+			if (server.equalsIgnoreCase(playersServer)) {
+				return;
+			}
+		}
 		
 		plugin.getRegexManager().filterChat(event);
 		
-		if (event.isCancelled() != true) {
+		if (!event.isCancelled()) {
 			String message = event.getMessage();
 			ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
 			Chatter chatter = plugin.getChatter(sender.getName());
