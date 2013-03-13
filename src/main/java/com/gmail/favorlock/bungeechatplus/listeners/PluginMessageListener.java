@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import com.google.common.eventbus.Subscribe;
 
@@ -51,28 +52,17 @@ public class PluginMessageListener implements Listener {
 			
 			ChatEvent chatevent = new ChatEvent(player, event.getReceiver(), message);
 			
-			plugin.getRegexManager().filterChat(chatevent);
+			if (plugin.getConfig().Settings_EnableRegex) {
+				plugin.getRegexManager().filterChat(chatevent);
+			}
 			
-			String outputMessage = plugin.getConfig().Settings_ChatFormat;
-			outputMessage = outputMessage.replace("%server", player.getServer().getInfo().getName());
-			if (chatter.getPrefix() != null) {
-				outputMessage = outputMessage.replace("%prefix", chatter.getPrefix());
-			} else {
-				outputMessage = outputMessage.replace("%prefix", "");
-			}
-			outputMessage = outputMessage.replace("%player", chatter.getName());
-			if (chatter.getSuffix() != null) {
-				outputMessage = outputMessage.replace("%suffix", chatter.getSuffix());
-			} else {
-				outputMessage = outputMessage.replace("%suffix", "");
-			}
-			outputMessage = outputMessage.replace("%message", chatevent.getMessage());
+			message = ChatFormat.formatMessage(message, plugin, player, chatter);
 			
 			for (ProxiedPlayer player2 : plugin.getPlayers()) {
 				Chatter listener = plugin.getChatter(player2.getName());
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != player2.getServer().getInfo().getName()) {
-						player2.sendMessage(FontFormat.translateString(outputMessage));
+						player2.sendMessage(FontFormat.translateString(message));
 					}
 				}
 			}

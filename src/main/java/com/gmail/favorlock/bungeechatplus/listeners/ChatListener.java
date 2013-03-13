@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import com.google.common.eventbus.Subscribe;
 
@@ -36,34 +37,21 @@ public class ChatListener implements Listener {
 			}
 		}
 		
-		plugin.getRegexManager().filterChat(event);
+		if (plugin.getConfig().Settings_EnableRegex) {
+			plugin.getRegexManager().filterChat(event);
+		}
 		
-		if (!event.isCancelled()) {
-			String message = event.getMessage();
-			ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
-			Chatter chatter = plugin.getChatter(sender.getName());
-			
-			String outputMessage = plugin.getConfig().Settings_ChatFormat;
-			outputMessage = outputMessage.replace("%server", sender.getServer().getInfo().getName());
-			if (chatter.getPrefix() != null) {
-				outputMessage = outputMessage.replace("%prefix", chatter.getPrefix());
-			} else {
-				outputMessage = outputMessage.replace("%prefix", "");
-			}
-			outputMessage = outputMessage.replace("%player", chatter.getName());
-			if (chatter.getSuffix() != null) {
-				outputMessage = outputMessage.replace("%suffix", chatter.getSuffix());
-			} else {
-				outputMessage = outputMessage.replace("%suffix", "");
-			}
-			outputMessage = outputMessage.replace("%message", message);
+		String message = event.getMessage();
+		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
+		Chatter chatter = plugin.getChatter(sender.getName());
 		
-			for (ProxiedPlayer player : plugin.getPlayers()) {
-				Chatter listener = plugin.getChatter(player.getName());
-				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
-					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
-						player.sendMessage(FontFormat.translateString(outputMessage));
-					}
+		message = ChatFormat.formatMessage(message, plugin, sender, chatter);
+		
+		for (ProxiedPlayer player : plugin.getPlayers()) {
+			Chatter listener = plugin.getChatter(player.getName());
+			if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
+				if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
+					player.sendMessage(FontFormat.translateString(message));
 				}
 			}
 		}

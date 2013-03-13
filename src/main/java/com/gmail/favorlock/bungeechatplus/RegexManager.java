@@ -424,7 +424,7 @@ public class RegexManager {
     public void logToFile(String message) {   
     	// send to the console as info any logTofiles
     	plugin.getProxyServer().getLogger().info(message);  	
-    	Boolean logEnabled = plugin.getConfig().Settings_EnableLog;
+    	Boolean logEnabled = plugin.getConfig().Settings_EnableRegexLog;
     	if (logEnabled) {	
 	    	try {
 	    		File directory = new File("plugins" + File.separator + plugin.getDescription().getName());

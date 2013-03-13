@@ -41,10 +41,13 @@ public class BungeeChatPlus extends Plugin {
 		}
 		// Initialize Chatters
 		chatters = new HashMap<String,Chatter>();
-		// Initialize RegexManager
-		regex = new RegexManager(this);
-		// Load Regex Rules
-		regex.loadRules();
+		// Check if regex is enabled
+		if (getConfig().Settings_EnableRegex) {
+			// Initialize RegexManager
+			regex = new RegexManager(this);
+			// Load Regex Rules
+			regex.loadRules();
+		}
 		// Register Channels
 		registerChannels();
 		// Load Listeners
