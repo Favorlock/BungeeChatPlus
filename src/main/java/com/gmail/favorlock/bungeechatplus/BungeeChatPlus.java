@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import com.gmail.favorlock.bungeechatplus.commands.Verbose;
+import com.gmail.favorlock.bungeechatplus.cmd.CommandHandler;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.BCP;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
 import com.gmail.favorlock.bungeechatplus.listeners.PluginMessageListener;
@@ -19,6 +21,7 @@ import net.md_5.bungee.api.plugin.PluginManager;
 
 public class BungeeChatPlus extends Plugin {
 	
+	private final CommandHandler commandHandler = new CommandHandler(this);
 	private BungeeChatPlusConfig config;
 	private Map<String,Chatter> chatters;
 	private CommandSender console;
@@ -72,7 +75,8 @@ public class BungeeChatPlus extends Plugin {
 	}
 	
 	private void registerCommands() {
-		getProxyServer().getPluginManager().registerCommand(new Verbose(this));
+		getProxyServer().getPluginManager().registerCommand(new BCP(this));
+		getCommandHandler().addCommand(new Verbose(this));
 	}
 	
 	private void registerChannels() {
@@ -89,6 +93,10 @@ public class BungeeChatPlus extends Plugin {
 	
 	public RegexManager getRegexManager() {
 		return this.regex;
+	}
+	
+	public CommandHandler getCommandHandler() {
+		return this.commandHandler;
 	}
 	
 	public CommandSender getConsole() {
