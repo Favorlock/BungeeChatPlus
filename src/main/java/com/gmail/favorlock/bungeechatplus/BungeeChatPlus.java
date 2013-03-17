@@ -1,29 +1,26 @@
 package com.gmail.favorlock.bungeechatplus;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.cmd.CommandHandler;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.BCP;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
-import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+import com.gmail.favorlock.bungeechatplus.config.BungeeChatPlusConfig;
 import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
 import com.gmail.favorlock.bungeechatplus.listeners.PluginMessageListener;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
 public class BungeeChatPlus extends Plugin {
 	
 	private final CommandHandler commandHandler = new CommandHandler(this);
+	private final ChatterManager chatterManager = new ChatterManager(this);
 	private BungeeChatPlusConfig config;
-	private Map<String,Chatter> chatters;
 	private CommandSender console;
 	private RegexManager regex;
 	
@@ -42,8 +39,6 @@ public class BungeeChatPlus extends Plugin {
 		} catch ( Exception ex ) {
 			ex.printStackTrace();
 		}
-		// Initialize Chatters
-		chatters = new HashMap<String,Chatter>();
 		// Check if regex is enabled
 		if (getConfig().Settings_EnableRegex) {
 			// Initialize RegexManager
@@ -95,6 +90,10 @@ public class BungeeChatPlus extends Plugin {
 		return this.regex;
 	}
 	
+	public ChatterManager getChatterManager() {
+		return this.chatterManager;
+	}
+	
 	public CommandHandler getCommandHandler() {
 		return this.commandHandler;
 	}
@@ -105,15 +104,5 @@ public class BungeeChatPlus extends Plugin {
 	
 	public Collection<ProxiedPlayer> getPlayers() {
 		return getProxyServer().getPlayers();
-	}
-	
-	public Chatter getChatter(String name) {
-		return this.chatters.get(name);
-	}
-	
-	public void addChatter(LoginEvent event) {
-		if(!this.chatters.containsKey(event.getConnection().getName())) {
-			this.chatters.put(event.getConnection().getName(), new Chatter(event.getConnection().getName(), this));
-		}
 	}
 }

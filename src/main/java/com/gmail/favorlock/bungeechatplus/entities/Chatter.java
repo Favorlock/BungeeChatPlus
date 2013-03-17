@@ -1,17 +1,18 @@
 package com.gmail.favorlock.bungeechatplus.entities;
 
-import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
+import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
 
 public class Chatter {
 	
+	private final ChatterStorage storage;
 	private String name;
 	private boolean verbose;
 	private String prefix;
 	private String suffix;
 	
-	public Chatter(String name, BungeeChatPlus plugin) {
+	public Chatter(String name, ChatterStorage storage) {
+		this.storage = storage;
 		this.name = name;
-		verbose = plugin.getConfig().Settings_GlobalChatOnLogin;
 	}
 	
 	public String getName() {
@@ -20,6 +21,10 @@ public class Chatter {
 	
 	public void setVerbose() {
 		this.verbose = !verbose;
+	}
+	
+	public void setVerbose(boolean bool) {
+		this.verbose = bool;
 	}
 	
 	public boolean getVerbose() {

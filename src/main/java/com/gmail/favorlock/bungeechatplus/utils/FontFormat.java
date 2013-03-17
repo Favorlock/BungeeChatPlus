@@ -32,7 +32,7 @@ public enum FontFormat {
 	private final String value;
 	private static final String characterValue = "\u00a7";
 	private static final Map<String, String> translate;
-	private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf(characterValue) + "[0-9A-FK-OR]");
+	private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf("&") + "[0-9A-FK-OR]");
 
 	private FontFormat(String value) {
 		this.value = characterValue + value;

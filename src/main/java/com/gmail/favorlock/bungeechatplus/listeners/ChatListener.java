@@ -43,12 +43,12 @@ public class ChatListener implements Listener {
 		
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
-		Chatter chatter = plugin.getChatter(sender.getName());
+		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		
 		message = ChatFormat.formatMessage(message, plugin, sender, chatter);
 		
 		for (ProxiedPlayer player : plugin.getPlayers()) {
-			Chatter listener = plugin.getChatter(player.getName());
+			Chatter listener = plugin.getChatterManager().getChatter(player.getName());
 			if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 				if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
 					player.sendMessage(FontFormat.translateString(message));
@@ -59,7 +59,7 @@ public class ChatListener implements Listener {
 	
 	@Subscribe
 	public void onPlayerLogin(LoginEvent event) {
-		plugin.addChatter(event);
+		plugin.getChatterManager().loadChatter(event.getConnection().getName());
 	}
 
 }

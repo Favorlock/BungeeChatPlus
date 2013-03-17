@@ -28,7 +28,7 @@ public class Verbose extends BaseCommand {
 		if(!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
-		Chatter chatter = this.plugin.getChatter(sender.getName());
+		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		chatter.setVerbose();
 		if(chatter.getVerbose() == true) {
 			sender.sendMessage(FontFormat.translateString("&7You are now talking in &2Global Chat"));

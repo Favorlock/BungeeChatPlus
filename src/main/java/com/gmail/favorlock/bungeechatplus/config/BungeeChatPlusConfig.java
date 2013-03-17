@@ -1,7 +1,9 @@
-package com.gmail.favorlock.bungeechatplus;
+package com.gmail.favorlock.bungeechatplus.config;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 
 import net.craftminecraft.bungee.bungeeyaml.supereasyconfig.Config;
 

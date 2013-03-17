@@ -18,6 +18,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
+
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 
@@ -175,7 +177,7 @@ public class RegexManager {
         String pname = player.getName();
 
         // Permissions Check, if player has bypass permissions, then skip everything.
-        if (!(player.hasPermission("BungeeChatPlus.bypass"))) {
+        if (!(player.hasPermission("bungeechat.bypass"))) {
 	    	// Booleans
         	Boolean cancel = false;
 	    	Boolean kick = false;
@@ -197,6 +199,11 @@ public class RegexManager {
 	    	String warnmsg = plugin.getConfig().Settings_Messages_warnmsg;
 	    	String kickmsg = plugin.getConfig().Settings_Messages_kickmsg;
 	    	
+	    	// Color
+	    	if (!player.hasPermission("bungeechat.colors")) {
+	    		message = FontFormat.stripColor(message);
+	    	}
+	    	
 	    	// Apply rules 
 	    	for (String line : this.rules) {
 	    		if (aborted) { break; } 
@@ -204,7 +211,7 @@ public class RegexManager {
 	    		    
 	    		if (line.startsWith("match ")) {
 	    			regex = line.substring(6); 			
-	    			matched = this.matchPattern(com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1")), regex); 			
+	    			matched = this.matchPattern(FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1")), regex); 			
 	    			if (matched) {
 	    				matched_msg = message;
 	    				matchLogMsg = "MATCH <"+player.getName() + "> " + event.getMessage();
@@ -238,7 +245,7 @@ public class RegexManager {
 		        			String ignorestring = line.substring(14);
 		    				valid = true;
 		    				for (String check : ignorestring.split("\\|")) {
-		    					if (com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1")).toUpperCase().indexOf(check.toUpperCase()) != -1) {
+		    					if (FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1")).toUpperCase().indexOf(check.toUpperCase()) != -1) {
 			        				matched = false;
 			        				break;
 		                        }	
@@ -275,13 +282,13 @@ public class RegexManager {
 	    			// Finally check for any then statements
 	    			if (line.startsWith("then")) {
 						if (line.startsWith("then replace ")) {	
-							message = com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));
+							message = FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));
 							message = this.replacePattern(message, regex, line.substring(13));
 							message = message.replaceAll("&([0-9a-fk-or])", "\u00A7$1");						
 			    			valid = true;
 						}
 						if (line.matches("then replace")) {	
-							message = com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));						
+							message = FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));						
 							message = this.replacePattern(message, regex, "");						
 							message = message.replaceAll("&([0-9a-fk-or])", "\u00A7$1");
 							valid = true;
@@ -297,13 +304,13 @@ public class RegexManager {
 							valid = true;
 						}							
 						if (line.startsWith("then randrep ")) {	
-                            message = com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));
+                            message = FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));
 							message = this.replacePatternRandom(message, regex, line.substring(13));
 							message = message.replaceAll("&([0-9a-fk-or])", "\u00A7$1");
 			    			valid = true;
 						}							
 						if (line.startsWith("then lower")) {
-                            message = com.gmail.favorlock.bungeechatplus.utils.FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));							
+                            message = FontFormat.stripColor(message.replaceAll("&([0-9a-fk-or])", "\u00A7$1"));							
 							message = this.replacePatternLower(message, regex);							
 							message = message.replaceAll("&([0-9a-fk-or])", "\u00A7$1");
 							valid = true;
