@@ -5,6 +5,11 @@ import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.cmd.CommandHandler;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.BCP;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Create;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Delete;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Focus;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Join;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.Leave;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.config.BungeeChatPlusConfig;
 import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
@@ -19,7 +24,8 @@ import net.md_5.bungee.api.plugin.PluginManager;
 public class BungeeChatPlus extends Plugin {
 	
 	private final CommandHandler commandHandler = new CommandHandler(this);
-	private final ChatterManager chatterManager = new ChatterManager(this);
+	private ChannelManager channelManager;
+	private ChatterManager chatterManager;
 	private BungeeChatPlusConfig config;
 	private CommandSender console;
 	private RegexManager regex;
@@ -39,6 +45,9 @@ public class BungeeChatPlus extends Plugin {
 		} catch ( Exception ex ) {
 			ex.printStackTrace();
 		}
+		
+		channelManager = new ChannelManager(this);
+		chatterManager = new ChatterManager(this);
 		// Check if regex is enabled
 		if (getConfig().Settings_EnableRegex) {
 			// Initialize RegexManager
@@ -72,6 +81,11 @@ public class BungeeChatPlus extends Plugin {
 	private void registerCommands() {
 		getProxyServer().getPluginManager().registerCommand(new BCP(this));
 		getCommandHandler().addCommand(new Verbose(this));
+		getCommandHandler().addCommand(new Create(this));
+		getCommandHandler().addCommand(new Delete(this));
+		getCommandHandler().addCommand(new Focus(this));
+		getCommandHandler().addCommand(new Join(this));
+		getCommandHandler().addCommand(new Leave(this));
 	}
 	
 	private void registerChannels() {
@@ -88,6 +102,10 @@ public class BungeeChatPlus extends Plugin {
 	
 	public RegexManager getRegexManager() {
 		return this.regex;
+	}
+	
+	public ChannelManager getChannelManager() {
+		return this.channelManager;
 	}
 	
 	public ChatterManager getChatterManager() {

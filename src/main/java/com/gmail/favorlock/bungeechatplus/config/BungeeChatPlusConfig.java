@@ -14,7 +14,7 @@ public class BungeeChatPlusConfig extends Config {
 		CONFIG_HEADER = "BungeeChatPlus - By Favorlock";
 	}
 	
-	public String Settings_ChatFormat = "&8[&2%server&8]%prefix&6%player&7%suffix: %message";
+	public String Settings_DefaultChannel = "Global";
 	public boolean Settings_GlobalChatOnLogin = true;
 	public boolean Settings_EnableRegex = true;
 	public boolean Settings_EnableRegexLog = true;

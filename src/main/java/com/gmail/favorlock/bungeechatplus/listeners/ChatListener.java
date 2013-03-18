@@ -1,8 +1,10 @@
 package com.gmail.favorlock.bungeechatplus.listeners;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
+import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
@@ -11,6 +13,7 @@ import com.google.common.eventbus.Subscribe;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.LoginEvent;
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
 public class ChatListener implements Listener {
@@ -26,6 +29,9 @@ public class ChatListener implements Listener {
 	@Subscribe
 	public void onPlayerMessage(ChatEvent event) {
 		if (!(event.getSender() instanceof ProxiedPlayer)) {
+			return;
+		}
+		if (event.getMessage().startsWith("/")) {
 			return;
 		}
 		
@@ -44,22 +50,19 @@ public class ChatListener implements Listener {
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
+		Channel channel = chatter.getActiveChannel();
 		
-		message = ChatFormat.formatMessage(message, plugin, sender, chatter);
-		
-		for (ProxiedPlayer player : plugin.getPlayers()) {
-			Chatter listener = plugin.getChatterManager().getChatter(player.getName());
-			if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
-				if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
-					player.sendMessage(FontFormat.translateString(message));
-				}
-			}
-		}
+		channel.sendMessage(event, message);
 	}
 	
 	@Subscribe
 	public void onPlayerLogin(LoginEvent event) {
 		plugin.getChatterManager().loadChatter(event.getConnection().getName());
+	}
+	
+	@Subscribe
+	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
+		plugin.getChatterManager().update(event.getPlayer().getName());
 	}
 
 }

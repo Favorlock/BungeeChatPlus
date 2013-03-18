@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
+import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
@@ -53,16 +54,9 @@ public class PluginMessageListener implements Listener {
 				plugin.getRegexManager().filterChat(chatevent);
 			}
 			
-			message = ChatFormat.formatMessage(message, plugin, player, chatter);
+			Channel chatChannel = chatter.getActiveChannel();
 			
-			for (ProxiedPlayer player2 : plugin.getPlayers()) {
-				Chatter listener = plugin.getChatterManager().getChatter(player2.getName());
-				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
-					if (player.getServer().getInfo().getName() != player2.getServer().getInfo().getName()) {
-						player2.sendMessage(FontFormat.translateString(message));
-					}
-				}
-			}
+			chatChannel.sendMessage(chatevent, message);
 		}
 	}
 
