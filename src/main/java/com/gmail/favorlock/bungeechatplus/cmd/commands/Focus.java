@@ -29,6 +29,10 @@ public class Focus extends BaseCommand {
 			return false;
 		}
 		Channel channel = plugin.getChannelManager().getChannel(args[0]);
+		if (channel == null) {
+			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
+			return false;
+		}
 		if(plugin.getChatterManager().getChatter(sender.getName()).setActiveChannel(channel)) {
 			sender.sendMessage(FontFormat.translateString("&eYou are now talking in &2" + channel.getName()));
 			return true;

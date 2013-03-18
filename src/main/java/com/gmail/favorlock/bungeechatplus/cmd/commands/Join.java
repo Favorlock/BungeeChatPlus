@@ -29,6 +29,10 @@ public class Join extends BaseCommand {
 			return false;
 		}
 		Channel channel = plugin.getChannelManager().getChannel(args[0]);
+		if (channel == null) {
+			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
+			return false;
+		}
 		if(plugin.getChatterManager().getChatter(sender.getName()).addChannel(channel)) {
 			sender.sendMessage(FontFormat.translateString("&eYou you joined the channel &2" + channel.getName()));
 			return true;

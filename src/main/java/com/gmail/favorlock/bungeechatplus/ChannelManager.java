@@ -59,7 +59,7 @@ public class ChannelManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			this.channels.put(name, new Channel(storage));
+			this.channels.put(name.toLowerCase(), new Channel(storage));
 			return true;
 		}
 		return false;
