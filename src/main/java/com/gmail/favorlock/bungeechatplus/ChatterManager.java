@@ -36,7 +36,9 @@ public class ChatterManager {
 		chatter.setVerbose(storage.Verbose);
 		
 		for (Channel channel : chatter.getChannels()) {
-			channel.addChatter(chatter);
+			if (channel != null) {
+				channel.addChatter(chatter);
+			}
 		}
 		
 		this.chatters.put(name, chatter);

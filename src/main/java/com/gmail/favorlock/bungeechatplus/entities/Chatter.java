@@ -43,6 +43,7 @@ public class Chatter {
 		
 			if (!this.channels.contains(channel)) {
 				this.channels.add(channel);
+				channel.addChatter(this);
 			}
 			return true;
 		}
@@ -52,6 +53,7 @@ public class Chatter {
 	public boolean addChannel(Channel channel) {
 		if (!channels.contains(channel)) {
 			channels.add(channel);
+			channel.addChatter(this);
 			return true;
 		}
 		return false;

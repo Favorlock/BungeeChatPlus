@@ -6,6 +6,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.cmd.BaseCommand;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
+import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 
 public class Leave extends BaseCommand {
@@ -28,8 +29,17 @@ public class Leave extends BaseCommand {
 		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
+		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
+		if (chatter == null) {
+			return false;
+		}
 		Channel channel = plugin.getChannelManager().getChannel(args[0]);
-		if(plugin.getChatterManager().getChatter(sender.getName()).removeChannel(channel)) {
+		if (channel == null) {
+			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
+			return false;
+		}
+		if(chatter.removeChannel(channel)) {
+			channel.getChatters().remove(chatter);
 			sender.sendMessage(FontFormat.translateString("&eYou are no longer in channel &2" + channel.getName()));
 			return true;
 		}

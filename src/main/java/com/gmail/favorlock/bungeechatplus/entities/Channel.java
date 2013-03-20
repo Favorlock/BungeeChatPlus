@@ -1,6 +1,7 @@
 package com.gmail.favorlock.bungeechatplus.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -15,6 +16,7 @@ public class Channel {
 	private String name;
 	private String nick;
 	private String format;
+	private int maxChatters;
 	private ArrayList<Chatter> chatters;
 	
 	public Channel(ChannelStorage storage) {
@@ -22,6 +24,7 @@ public class Channel {
 		this.name = storage.Name;
 		this.nick = storage.Nick;
 		this.format = storage.Format;
+		this.maxChatters = storage.MaxChatters;
 		this.chatters = new ArrayList<Chatter>();
 	}
 	
@@ -39,6 +42,14 @@ public class Channel {
 	
 	public String getFormat() {
 		return this.format;
+	}
+	
+	public int getMaxChatters() {
+		return this.maxChatters;
+	}
+	
+	public List<Chatter> getChatters() {
+		return this.chatters;
 	}
 	
 	public void addChatter(Chatter chatter) {

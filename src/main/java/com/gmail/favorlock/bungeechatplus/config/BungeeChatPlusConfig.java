@@ -16,6 +16,7 @@ public class BungeeChatPlusConfig extends Config {
 	
 	public String Settings_DefaultChannel = "Global";
 	public boolean Settings_GlobalChatOnLogin = true;
+	public int Setting_MaxChannelsPerChatter = 3;
 	public boolean Settings_EnableRegex = true;
 	public boolean Settings_EnableRegexLog = true;
 	public String Settings_Messages_warnmsg = "&4[&6BungeeChat+&4] &4Warned by BungeeChat+!";

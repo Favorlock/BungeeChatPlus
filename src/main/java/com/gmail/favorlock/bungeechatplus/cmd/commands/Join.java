@@ -6,6 +6,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.cmd.BaseCommand;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
+import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 
 public class Join extends BaseCommand {
@@ -28,9 +29,24 @@ public class Join extends BaseCommand {
 		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
+		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
+		if (chatter == null) {
+			return false;
+		}
 		Channel channel = plugin.getChannelManager().getChannel(args[0]);
 		if (channel == null) {
 			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
+			return false;
+		}
+		boolean inChannel = channel.getChatters().contains(chatter);
+		if ((channel.getChatters().size() >= channel.getMaxChatters()) && !(channel.getMaxChatters() == -1)
+				&& !inChannel) {
+			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is full"));
+			return false;
+		}
+		int maxChannelsPerChatter = plugin.getConfig().Setting_MaxChannelsPerChatter;
+		if ((chatter.getChannels().size() >= maxChannelsPerChatter) && !(maxChannelsPerChatter == -1) && !inChannel) {
+			sender.sendMessage(FontFormat.translateString("&4You are in the maximum number of channels"));
 			return false;
 		}
 		if(plugin.getChatterManager().getChatter(sender.getName()).addChannel(channel)) {
