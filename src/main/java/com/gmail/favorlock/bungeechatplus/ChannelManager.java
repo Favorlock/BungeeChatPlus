@@ -18,7 +18,7 @@ public class ChannelManager {
 	public Map<String, Channel> channels;
 	
 	public ChannelManager(BungeeChatPlus plugin) {
-		this.directory =new File("plugins" + File.separator + plugin.getDescription().getName() +
+		this.directory = new File("plugins" + File.separator + plugin.getDescription().getName() +
 				File.separator + "channels");
 		this.plugin = plugin;
 		channels = new HashMap<String, Channel>();
@@ -38,15 +38,18 @@ public class ChannelManager {
 		}
 		Channel channel = new Channel(storage);
 		this.defaultChannel = channel;
+		this.channels.put(storage.Name.toLowerCase(), channel);
 		
 		for (File file : directory.listFiles()) {
 			ChannelStorage storage2 = new ChannelStorage(plugin, file.getName());
-			try {
-				storage2.init();
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (!storage2.Name.toLowerCase().equals(defaultChannel.getName().toLowerCase())) {
+				try {
+					storage2.init();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				this.channels.put(storage2.Name.toLowerCase(), new Channel(storage2));
 			}
-			this.channels.put(storage2.Name.toLowerCase(), new Channel(storage2));
 		}
 	}
 	

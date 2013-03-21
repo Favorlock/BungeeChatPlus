@@ -19,7 +19,7 @@ public class Focus extends BaseCommand {
 		setDescription("Set your active channel");
 		setUsage("/bcp focus <channel>");
 		setArgumentRange(1, 1);
-		setPermission("bungeechat.channels.focus");
+		setPermission("bungeechat.focus");
 		setIdentifiers(new String[] { "bcp focus" });
 	}
 

@@ -19,7 +19,7 @@ public class Join extends BaseCommand {
 		setDescription("Join a channel");
 		setUsage("/bcp join <channel>");
 		setArgumentRange(1, 1);
-		setPermission("bungeechat.channels.join");
+		setPermission("bungeechat.join");
 		setIdentifiers(new String[] { "bcp join" });
 	}
 

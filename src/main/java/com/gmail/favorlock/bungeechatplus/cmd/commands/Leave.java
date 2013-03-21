@@ -19,7 +19,7 @@ public class Leave extends BaseCommand {
 		setDescription("Leave a channel");
 		setUsage("/bcp leave <channel>");
 		setArgumentRange(1, 1);
-		setPermission("bungeechat.channels.leave");
+		setPermission("bungeechat.leave");
 		setIdentifiers(new String[] { "bcp leave" });
 	}
 

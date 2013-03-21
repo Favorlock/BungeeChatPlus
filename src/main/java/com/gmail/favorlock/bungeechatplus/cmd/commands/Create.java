@@ -16,7 +16,7 @@ public class Create extends BaseCommand {
 		setDescription("Create a new channel");
 		setUsage("/bcp create <channel>");
 		setArgumentRange(1, 1);
-		setPermission("bungeechat.channels.create");
+		setPermission("bungeechat.create");
 		setIdentifiers(new String[] { "bcp create" });
 	}
 

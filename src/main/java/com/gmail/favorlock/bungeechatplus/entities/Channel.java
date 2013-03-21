@@ -62,18 +62,31 @@ public class Channel {
 	
 	public void sendMessage(ChatEvent event, String message) {
 		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
-		Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
-		message = ChatFormat.formatMessage(message, storage.getPlugin(), sender, chatter, this);
+		
+		if (sender.hasPermission("bungeechat.channels.*") || 
+				sender.hasPermission("bungeechat.channels." + this.getName().toLowerCase())) {
+		
+			Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
+			message = ChatFormat.formatMessage(message, storage.getPlugin(), sender, chatter, this);
 				
-		for (ProxiedPlayer player : storage.getPlugin().getPlayers()) {
-			Chatter listener = storage.getPlugin().getChatterManager().getChatter(player.getName());
-			if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
-				if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
-					if (chatters.contains(listener)) {
-						player.sendMessage(FontFormat.translateString(message));
+			for (ProxiedPlayer player : storage.getPlugin().getPlayers()) {
+				Chatter listener = storage.getPlugin().getChatterManager().getChatter(player.getName());
+				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
+					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
+						if (chatters.contains(listener)) {
+							player.sendMessage(FontFormat.translateString(message));
+						}
+					}
+					if (storage.getPlugin().getConfig().Settings_SendToLocalChat) {
+						if (player.getServer().getInfo().getName() == sender.getServer().getInfo().getName()) {
+							player.sendMessage(FontFormat.translateString(message));
+						}
 					}
 				}
 			}
+		} else {
+			sender.sendMessage(FontFormat.translateString("&4You do not have permission to speak in &7" +
+					this.getName()));
 		}
 	}
 

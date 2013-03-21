@@ -16,7 +16,7 @@ public class Delete extends BaseCommand {
 		setDescription("Delete a channel");
 		setUsage("/bcp delete <channel>");
 		setArgumentRange(1, 1);
-		setPermission("bungeechat.channels.delete");
+		setPermission("bungeechat.delete");
 		setIdentifiers(new String[] { "bcp delete" });
 	}
 
