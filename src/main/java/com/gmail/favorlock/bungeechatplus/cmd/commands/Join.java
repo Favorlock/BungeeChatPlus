@@ -39,34 +39,41 @@ public class Join extends BaseCommand {
 			return false;
 		}
 		
-		if (!channel.getPassword().equals("") && !(args.length == 2)) {
-			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] 
-					+ "&e is password protected"));
-			return false;
-		}
-		if (!channel.getPassword().equals("") && (args.length == 2)) {
-			if (!args[1].equals(channel.getPassword())) {
-				sender.sendMessage(FontFormat.translateString("&4You entered the wrong password!"));
+		if (sender.hasPermission("bungeechat.channels.*") || 
+				sender.hasPermission("bungeechat.channels." + channel.getName().toLowerCase())) {
+			if (!channel.getPassword().equals("") && !(args.length == 2)) {
+				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] 
+						+ "&e is password protected"));
 				return false;
 			}
-		}
-		boolean inChannel = channel.getChatters().contains(chatter);
-		if ((channel.getChatters().size() >= channel.getMaxChatters()) && !(channel.getMaxChatters() == -1)
-				&& !inChannel) {
-			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is full"));
+			if (!channel.getPassword().equals("") && (args.length == 2)) {
+				if (!args[1].equals(channel.getPassword())) {
+					sender.sendMessage(FontFormat.translateString("&4You entered the wrong password!"));
+					return false;
+				}
+			}
+			boolean inChannel = channel.getChatters().contains(chatter);
+			if ((channel.getChatters().size() >= channel.getMaxChatters()) && !(channel.getMaxChatters() == -1)
+					&& !inChannel) {
+				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is full"));
+				return false;
+			}
+			int maxChannelsPerChatter = plugin.getConfig().Setting_MaxChannelsPerChatter;
+			if ((chatter.getChannels().size() >= maxChannelsPerChatter) && !(maxChannelsPerChatter == -1) && !inChannel) {
+				sender.sendMessage(FontFormat.translateString("&4You are in the maximum number of channels"));
+				return false;
+			}
+			if(plugin.getChatterManager().getChatter(sender.getName()).addChannel(channel)) {
+				sender.sendMessage(FontFormat.translateString("&eYou joined the channel &2" + channel.getName()));
+				return true;
+			}
+			sender.sendMessage(FontFormat.translateString("&2You are already in the channel &2" + channel.getName()));
+			return false;
+		} else {
+			sender.sendMessage(FontFormat.translateString("&4You do not have permission to join &7" +
+					channel.getName()));
 			return false;
 		}
-		int maxChannelsPerChatter = plugin.getConfig().Setting_MaxChannelsPerChatter;
-		if ((chatter.getChannels().size() >= maxChannelsPerChatter) && !(maxChannelsPerChatter == -1) && !inChannel) {
-			sender.sendMessage(FontFormat.translateString("&4You are in the maximum number of channels"));
-			return false;
-		}
-		if(plugin.getChatterManager().getChatter(sender.getName()).addChannel(channel)) {
-			sender.sendMessage(FontFormat.translateString("&eYou joined the channel &2" + channel.getName()));
-			return true;
-		}
-		sender.sendMessage(FontFormat.translateString("&2You are already in the channel &2" + channel.getName()));
-		return false;
 	}
 
 }

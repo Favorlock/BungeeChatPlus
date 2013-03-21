@@ -68,11 +68,11 @@ public class Channel {
 	
 	public void sendMessage(ChatEvent event, String message) {
 		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
+		Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
 		
 		if (sender.hasPermission("bungeechat.channels.*") || 
 				sender.hasPermission("bungeechat.channels." + this.getName().toLowerCase())) {
-		
-			Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
+			
 			message = ChatFormat.formatMessage(message, storage.getPlugin(), sender, chatter, this);
 				
 			for (ProxiedPlayer player : storage.getPlugin().getPlayers()) {
@@ -93,6 +93,8 @@ public class Channel {
 		} else {
 			sender.sendMessage(FontFormat.translateString("&4You do not have permission to speak in &7" +
 					this.getName()));
+			this.chatters.remove(chatter);
+			chatter.removeChannel(this);
 		}
 	}
 
