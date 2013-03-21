@@ -2,6 +2,7 @@ package com.gmail.favorlock.bungeechatplus;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,10 @@ public class ChannelManager {
 		return list;
 	}
 	
+	public Collection<Channel> getChannels() {
+		return this.channels.values();
+	}
+	
 	public boolean removeChannel(String name) {
 		if (channels.containsKey(name.toLowerCase())) {
 			this.channels.remove(name.toLowerCase());
@@ -92,12 +97,6 @@ public class ChannelManager {
 			return true;
 		}
 		return false;
-	}
-	
-	public void listChannels() {
-		for (String channel : channels.keySet()) {
-			// Do something
-		}
 	}
 
 }

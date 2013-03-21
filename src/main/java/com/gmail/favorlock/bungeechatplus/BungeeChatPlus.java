@@ -10,6 +10,7 @@ import com.gmail.favorlock.bungeechatplus.cmd.commands.Delete;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Focus;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Join;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Leave;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.List;
 import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
 import com.gmail.favorlock.bungeechatplus.config.BungeeChatPlusConfig;
 import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
@@ -86,6 +87,7 @@ public class BungeeChatPlus extends Plugin {
 		getCommandHandler().addCommand(new Focus(this));
 		getCommandHandler().addCommand(new Join(this));
 		getCommandHandler().addCommand(new Leave(this));
+		getCommandHandler().addCommand(new List(this));
 	}
 	
 	private void registerChannels() {
