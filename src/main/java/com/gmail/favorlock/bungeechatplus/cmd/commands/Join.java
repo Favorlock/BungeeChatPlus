@@ -58,7 +58,7 @@ public class Join extends BaseCommand {
 				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is full"));
 				return false;
 			}
-			int maxChannelsPerChatter = plugin.getConfig().Setting_MaxChannelsPerChatter;
+			int maxChannelsPerChatter = plugin.getConfig().Settings_MaxChannelsPerChatter;
 			if ((chatter.getChannels().size() >= maxChannelsPerChatter) && !(maxChannelsPerChatter == -1) && !inChannel) {
 				sender.sendMessage(FontFormat.translateString("&4You are in the maximum number of channels"));
 				return false;
