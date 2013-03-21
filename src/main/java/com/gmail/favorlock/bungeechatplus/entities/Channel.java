@@ -16,6 +16,7 @@ public class Channel {
 	private String name;
 	private String nick;
 	private String format;
+	private String password;
 	private int maxChatters;
 	private ArrayList<Chatter> chatters;
 	
@@ -24,6 +25,7 @@ public class Channel {
 		this.name = storage.Name;
 		this.nick = storage.Nick;
 		this.format = storage.Format;
+		this.password = storage.Password;
 		this.maxChatters = storage.MaxChatters;
 		this.chatters = new ArrayList<Chatter>();
 	}
@@ -42,6 +44,10 @@ public class Channel {
 	
 	public String getFormat() {
 		return this.format;
+	}
+	
+	public String getPassword() {
+		return this.password;
 	}
 	
 	public int getMaxChatters() {
