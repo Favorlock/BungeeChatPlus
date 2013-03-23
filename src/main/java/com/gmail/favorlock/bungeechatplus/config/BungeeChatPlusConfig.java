@@ -21,7 +21,7 @@ public class BungeeChatPlusConfig extends Config {
 	public boolean Settings_EnableRegexLog = true;
 	public String Settings_Messages_warnmsg = "&4[&6BungeeChat+&4] &4Warned by BungeeChat+!";
 	public String Settings_Messages_kickmsg = "&4[&6BungeeChat+&4] &4Kicked by BungeeChat+!";
-	public boolean Settings_SendToLocalChat = false;
+	public ArrayList<String> Settings_LocalChatOnServer = new ArrayList<String>();
 	public ArrayList<String> FactionServers = new ArrayList<String>();
 
 }

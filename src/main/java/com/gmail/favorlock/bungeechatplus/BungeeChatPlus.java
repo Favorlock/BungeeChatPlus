@@ -76,12 +76,12 @@ public class BungeeChatPlus extends Plugin {
 	}
 	
 	private void registerListeners() {
-		getProxyServer().getPluginManager().registerListener(new ChatListener(this));
-		getProxyServer().getPluginManager().registerListener(new PluginMessageListener(this));
+		getProxyServer().getPluginManager().registerListener(this, new ChatListener(this));
+		getProxyServer().getPluginManager().registerListener(this, new PluginMessageListener(this));
 	}
 	
 	private void registerCommands() {
-		getProxyServer().getPluginManager().registerCommand(new BCP(this));
+		getProxyServer().getPluginManager().registerCommand(this, new BCP(this));
 		getCommandHandler().addCommand(new Verbose(this));
 		getCommandHandler().addCommand(new Create(this));
 		getCommandHandler().addCommand(new Delete(this));

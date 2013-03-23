@@ -6,8 +6,6 @@ import java.io.IOException;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
-import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import com.google.common.eventbus.Subscribe;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;

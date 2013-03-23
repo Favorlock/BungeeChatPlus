@@ -26,7 +26,6 @@ public class List extends BaseCommand {
 			String[] args) {
 		sender.sendMessage(FontFormat.translateString("&a-----------------------------------------------------\n" +
 				"&eChannels"));
-		Integer id = 0;
 
 		for (Channel channel : plugin.getChannelManager().getChannels()) {
 			if (!(channel.getMaxChatters() == -1)) {

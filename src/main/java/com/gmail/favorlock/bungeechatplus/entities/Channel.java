@@ -83,8 +83,9 @@ public class Channel {
 							player.sendMessage(FontFormat.translateString(message));
 						}
 					}
-					if (storage.getPlugin().getConfig().Settings_SendToLocalChat) {
-						if (player.getServer().getInfo().getName() == sender.getServer().getInfo().getName()) {
+					for (String server : storage.getPlugin().getConfig().Settings_LocalChatOnServer) {
+						if ((player.getServer().getInfo().getName().equals(server)) && 
+								(sender.getServer().getInfo().getName().equals(server))) {
 							player.sendMessage(FontFormat.translateString(message));
 						}
 					}
