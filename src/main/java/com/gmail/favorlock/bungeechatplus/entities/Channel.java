@@ -70,6 +70,10 @@ public class Channel {
 		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
 		Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
 		
+		if (chatter == null) {
+			return;
+		}
+		
 		if (sender.hasPermission("bungeechat.channels.*") || 
 				sender.hasPermission("bungeechat.channels." + this.getName().toLowerCase())) {
 			
@@ -77,6 +81,9 @@ public class Channel {
 				
 			for (ProxiedPlayer player : storage.getPlugin().getPlayers()) {
 				Chatter listener = storage.getPlugin().getChatterManager().getChatter(player.getName());
+				if (listener == null) {
+					return;
+				}
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
 						if (chatters.contains(listener)) {
