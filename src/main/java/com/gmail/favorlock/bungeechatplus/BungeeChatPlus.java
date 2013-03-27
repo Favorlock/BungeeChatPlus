@@ -43,7 +43,7 @@ public class BungeeChatPlus extends Plugin {
 		}
 		try {
 			// Initialize Console CommandSender
-			console = (CommandSender) Class.forName("net.md_5.bungee.command.ConsoleCommandSender").getDeclaredMethod("getInstance").invoke(null);
+			console = getProxyServer().getConsole();
 		} catch ( Exception ex ) {
 			ex.printStackTrace();
 		}
