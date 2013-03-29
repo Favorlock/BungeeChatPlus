@@ -68,6 +68,13 @@ public class Channel {
 	
 	public void sendMessage(ChatEvent event, String message) {
 		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
+		
+		if (!(storage.Server == "") && !(storage.Server.equals(sender.getServer().getInfo().getName()))) {
+			sender.sendMessage(FontFormat.translateString("&4You must be on &7" + storage.Server 
+					+ "&4 to speak in &7" + this.name));
+			return;
+		}
+		
 		Chatter chatter = storage.getPlugin().getChatterManager().getChatter(sender.getName());
 		
 		if (chatter == null) {
@@ -87,13 +94,17 @@ public class Channel {
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
 						if (chatters.contains(listener)) {
-							player.sendMessage(FontFormat.translateString(message));
+							if ((storage.Server == "") || (storage.Server.equals(player.getServer().getInfo().getName()))) {
+								player.sendMessage(FontFormat.translateString(message));
+							}
 						}
 					}
 					for (String server : storage.getPlugin().getConfig().Settings_LocalChatOnServer) {
 						if ((player.getServer().getInfo().getName().equals(server)) && 
 								(sender.getServer().getInfo().getName().equals(server))) {
-							player.sendMessage(FontFormat.translateString(message));
+							if ((storage.Server == "") || (storage.Server.equals(player.getServer().getInfo().getName()))) {
+								player.sendMessage(FontFormat.translateString(message));
+							}
 						}
 					}
 				}
