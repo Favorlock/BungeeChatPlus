@@ -69,7 +69,7 @@ public class Channel {
 	public void sendMessage(ChatEvent event, String message) {
 		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
 		
-		if (!(storage.Server == "") && !(storage.Server.equals(sender.getServer().getInfo().getName()))) {
+		if (!(storage.Server.equals("")) && !(storage.Server.equals(sender.getServer().getInfo().getName()))) {
 			sender.sendMessage(FontFormat.translateString("&4You must be on &7" + storage.Server 
 					+ "&4 to speak in &7" + this.name));
 			return;
