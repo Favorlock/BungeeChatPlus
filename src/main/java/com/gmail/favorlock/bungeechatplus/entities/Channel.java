@@ -94,7 +94,7 @@ public class Channel {
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
 						if (chatters.contains(listener)) {
-							if ((storage.Server == "") || (storage.Server.equals(player.getServer().getInfo().getName()))) {
+							if ((storage.Server.equals("")) || (storage.Server.equals(player.getServer().getInfo().getName()))) {
 								player.sendMessage(FontFormat.translateString(message));
 							}
 						}
@@ -102,7 +102,7 @@ public class Channel {
 					for (String server : storage.getPlugin().getConfig().Settings_LocalChatOnServer) {
 						if ((player.getServer().getInfo().getName().equals(server)) && 
 								(sender.getServer().getInfo().getName().equals(server))) {
-							if ((storage.Server == "") || (storage.Server.equals(player.getServer().getInfo().getName()))) {
+							if ((storage.Server.equals("")) || (storage.Server.equals(player.getServer().getInfo().getName()))) {
 								player.sendMessage(FontFormat.translateString(message));
 							}
 						}
