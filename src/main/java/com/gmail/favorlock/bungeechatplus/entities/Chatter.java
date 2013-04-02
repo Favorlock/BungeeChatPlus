@@ -18,7 +18,11 @@ public class Chatter {
 		this.storage = storage;
 		this.name = name;
 		this.activeChannel = storage.getPlugin().getChannelManager().getChannel(storage.ActiveChannel);
-		this.channels = storage.getPlugin().getChannelManager().getChannels(storage.Channels);
+		if (!storage.Channels.isEmpty()) {
+			this.channels = storage.getPlugin().getChannelManager().getChannels(storage.Channels);
+		} else {
+			setActiveChannel(storage.getPlugin().getChannelManager().defaultChannel);
+		}
 	}
 	
 	public String getName() {
