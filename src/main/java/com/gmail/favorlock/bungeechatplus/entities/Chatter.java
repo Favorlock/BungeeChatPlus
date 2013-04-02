@@ -68,6 +68,7 @@ public class Chatter {
 					setActiveChannel(channels.get(0));
 				} else {
 					setActiveChannel(storage.getPlugin().getChannelManager().defaultChannel);
+					addChannel(storage.getPlugin().getChannelManager().defaultChannel);
 				}
 			}
 			return true;
