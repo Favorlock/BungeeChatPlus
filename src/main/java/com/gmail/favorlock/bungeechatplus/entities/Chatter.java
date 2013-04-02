@@ -42,13 +42,12 @@ public class Chatter {
 	}
 	
 	public boolean setActiveChannel(Channel channel) {
+		if(!this.channels.contains(channel)){
+			this.channels.add(channel);
+			channel.addChatter(this);
+		}
 		if (this.activeChannel != channel) {
-				this.activeChannel = channel;
-		
-			if (!this.channels.contains(channel)) {
-				this.channels.add(channel);
-				channel.addChatter(this);
-			}
+			this.activeChannel = channel;
 			return true;
 		}
 		return false;
@@ -72,7 +71,6 @@ public class Chatter {
 					setActiveChannel(channels.get(0));
 				} else {
 					setActiveChannel(storage.getPlugin().getChannelManager().defaultChannel);
-					addChannel(storage.getPlugin().getChannelManager().defaultChannel);
 				}
 			}
 			return true;
