@@ -43,7 +43,7 @@ public class Chatter {
 	
 	public boolean setActiveChannel(Channel channel) {
 		if(!this.channels.contains(channel)){
-			this.channels.add(channel);
+			addChannel(channel);
 			channel.addChatter(this);
 		}
 		if (this.activeChannel != channel) {
