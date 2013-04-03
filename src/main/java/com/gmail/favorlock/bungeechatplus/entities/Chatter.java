@@ -1,6 +1,10 @@
 package com.gmail.favorlock.bungeechatplus.entities;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import net.md_5.bungee.api.ProxyServer;
 
 import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
 
@@ -18,6 +22,10 @@ public class Chatter {
 		this.storage = storage;
 		this.name = name;
 		this.activeChannel = storage.getPlugin().getChannelManager().getChannel(storage.ActiveChannel);
+		
+		if (this.channels == null) {
+			this.channels = new ArrayList<Channel>();
+		}
 		if (!storage.Channels.isEmpty()) {
 			this.channels = storage.getPlugin().getChannelManager().getChannels(storage.Channels);
 		} else {
