@@ -24,6 +24,9 @@ public class ChatListener implements Listener {
 	
 	@Subscribe
 	public void onPlayerMessage(ChatEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
 		if (!(event.getSender() instanceof ProxiedPlayer)) {
 			return;
 		}
