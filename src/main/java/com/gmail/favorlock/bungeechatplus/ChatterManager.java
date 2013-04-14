@@ -62,8 +62,10 @@ public class ChatterManager {
 		storage.Channels = channels2;
 		
 		removeChatter(name);
+		chatter = null;
 		try {
 			storage.save();
+			storage = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,6 +77,7 @@ public class ChatterManager {
 	
 	public void removeChatter(String name) {
 		this.chatters.remove(name);
+		
 	}
 
 }

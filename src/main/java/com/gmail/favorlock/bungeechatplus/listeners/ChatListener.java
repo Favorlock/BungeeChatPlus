@@ -49,6 +49,11 @@ public class ChatListener implements Listener {
 		
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
+		
+		if (plugin.getChatterManager().getChatter(sender.getName()) == null) {
+			plugin.getChatterManager().loadChatter(sender.getName());
+		}
+		
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		Channel channel = chatter.getActiveChannel();
 		
