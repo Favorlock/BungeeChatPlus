@@ -2,10 +2,6 @@ package com.gmail.favorlock.bungeechatplus.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-
-import net.md_5.bungee.api.ProxyServer;
-
 import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
 
 public class Chatter {
