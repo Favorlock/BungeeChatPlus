@@ -77,7 +77,6 @@ public class ChatterManager {
 	
 	public void removeChatter(String name) {
 		this.chatters.remove(name);
-		
 	}
 
 }

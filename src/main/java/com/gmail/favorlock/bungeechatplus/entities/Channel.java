@@ -81,6 +81,10 @@ public class Channel {
 			return;
 		}
 		
+		if (chatter.getPrefix().equals(storage.getPlugin().getConfig().KarmicJailGroupPrefix)) {
+			return;
+		}
+		
 		if (sender.hasPermission("bungeechat.channels.*") || 
 				sender.hasPermission("bungeechat.channels." + this.getName().toLowerCase())) {
 			
