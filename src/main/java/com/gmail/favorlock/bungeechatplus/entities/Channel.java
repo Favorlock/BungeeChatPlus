@@ -2,7 +2,6 @@ package com.gmail.favorlock.bungeechatplus.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 
@@ -91,10 +90,16 @@ public class Channel {
 			message = ChatFormat.formatMessage(message, storage.getPlugin(), sender, chatter, this);
 				
 			for (ProxiedPlayer player : storage.getPlugin().getPlayers()) {
-				Chatter listener = storage.getPlugin().getChatterManager().getChatter(player.getName());
-				if (listener == null) {
-					return;
+				if (player == null || player.getServer() == null || sender.getServer() == null) {
+					continue;
 				}
+				
+				Chatter listener = storage.getPlugin().getChatterManager().getChatter(player.getName());
+				
+				if (listener == null) {
+					continue;
+				}
+				
 				if ((chatter.getVerbose() == true) && (listener.getVerbose() == true)) {
 					if (player.getServer().getInfo().getName() != sender.getServer().getInfo().getName()) {
 						if (chatters.contains(listener)) {
