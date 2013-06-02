@@ -1,16 +1,20 @@
 package com.gmail.favorlock.bungeechatplus.listeners;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.google.common.eventbus.Subscribe;
 
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
 public class ChatListener implements Listener {
 	
@@ -22,7 +26,7 @@ public class ChatListener implements Listener {
 		this.servers = plugin.getConfig().FactionServers;
 	}
 	
-	@Subscribe
+	@EventHandler
 	public void onPlayerMessage(ChatEvent event) {
 		if (event.isCancelled()) {
 			return;
@@ -56,15 +60,22 @@ public class ChatListener implements Listener {
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		Channel channel = chatter.getActiveChannel();
 		
+		if (channel == null) {
+			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Channel @ " + chatter.getName() +
+					"\nPlease send a copy of all files and the user name above to Favorlock.");
+			
+			return;
+		}
+		
 		channel.sendMessage(event, message);
 	}
 	
-	@Subscribe
+	@EventHandler
 	public void onPlayerLogin(PostLoginEvent event) {
 		plugin.getChatterManager().loadChatter(event.getPlayer().getName());
 	}
 	
-	@Subscribe
+	@EventHandler
 	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
 		plugin.getChatterManager().update(event.getPlayer().getName());
 	}
