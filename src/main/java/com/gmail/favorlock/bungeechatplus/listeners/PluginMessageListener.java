@@ -12,6 +12,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
 public class PluginMessageListener implements Listener {
 	
@@ -21,7 +22,7 @@ public class PluginMessageListener implements Listener {
 		this.plugin = plugin;
 	}
 	
-	@Subscribe
+	@EventHandler
 	public void receivePluginMessage(PluginMessageEvent event) throws IOException {
 		if (!event.getTag().equalsIgnoreCase("BungeeChatPlus")) {
 			return;
