@@ -23,6 +23,6 @@ public class BungeeChatPlusConfig extends Config {
 	public String Settings_Messages_kickmsg = "&4[&6BungeeChat+&4] &4Kicked by BungeeChat+!";
 	public ArrayList<String> Settings_LocalChatOnServer = new ArrayList<String>();
 	public ArrayList<String> FactionServers = new ArrayList<String>();
-	public String KarmicJailGroupPrefix = "";
+	public String JailGroupPrefix = "Jailed";
 
 }

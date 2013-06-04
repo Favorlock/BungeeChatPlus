@@ -6,8 +6,6 @@ import java.util.logging.Level;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.google.common.eventbus.Subscribe;
-
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -59,6 +57,10 @@ public class ChatListener implements Listener {
 		
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		Channel channel = chatter.getActiveChannel();
+		
+		if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
+			return;
+		}
 		
 		if (channel == null) {
 			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Channel @ " + chatter.getName() +

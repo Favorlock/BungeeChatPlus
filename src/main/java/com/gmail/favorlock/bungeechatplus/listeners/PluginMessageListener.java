@@ -6,8 +6,6 @@ import java.io.IOException;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.google.common.eventbus.Subscribe;
-
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
@@ -32,6 +30,11 @@ public class PluginMessageListener implements Listener {
 		if (channel.equalsIgnoreCase("VaultAffix")) {
 			String player = in.readUTF();
 			Chatter chatter = plugin.getChatterManager().getChatter(player);
+			
+			if (chatter == null) {
+				return;
+			}
+			
 			chatter.setPrefix(in.readUTF());
 			chatter.setSuffix(in.readUTF());
 		}
