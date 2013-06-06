@@ -1,11 +1,15 @@
 package com.gmail.favorlock.bungeechatplus.listeners;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
+
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
@@ -59,6 +63,11 @@ public class PluginMessageListener implements Listener {
 			Channel chatChannel = chatter.getActiveChannel();
 			
 			chatChannel.sendMessage(chatevent, message);
+		}
+		if (channel.equalsIgnoreCase("Broadcast")) {
+			String message = in.readUTF();
+			
+			ProxyServer.getInstance().broadcast(FontFormat.PURPLE + "[Alert] " + message);
 		}
 	}
 
