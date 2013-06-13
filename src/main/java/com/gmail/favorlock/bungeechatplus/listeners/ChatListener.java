@@ -51,11 +51,14 @@ public class ChatListener implements Listener {
 		String message = event.getMessage();
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
 		
-		if (plugin.getChatterManager().getChatter(sender.getName()) == null) {
-			plugin.getChatterManager().loadChatter(sender.getName());
+		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
+		
+		if (chatter == null) {
+			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Chatter @ " + sender.getName() +
+					"\nPlease send a copy of all files and the user name above to Favorlock.");
+			return;
 		}
 		
-		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		Channel channel = chatter.getActiveChannel();
 		
 		if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
