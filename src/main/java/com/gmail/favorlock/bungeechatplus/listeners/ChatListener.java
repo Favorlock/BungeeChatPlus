@@ -60,11 +60,13 @@ public class ChatListener implements Listener {
 		}
 		
 		Channel channel = chatter.getActiveChannel();
-		
-		if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
-			return;
-		}
-		
+
+        if (chatter.getPrefix() != null) {
+            if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
+                return;
+            }
+        }
+
 		if (channel == null) {
 			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Channel @ " + chatter.getName() +
 					"\nPlease send a copy of all files and the user name above to Favorlock.");
