@@ -1,27 +1,22 @@
 package com.gmail.favorlock.bungeechatplus;
 
-import java.util.Collection;
-import java.util.logging.Level;
-
 import com.gmail.favorlock.bungeechatplus.cmd.CommandHandler;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.BCP;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Create;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Delete;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Focus;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Join;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Leave;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.List;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.PrivateMessage;
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
+import com.gmail.favorlock.bungeechatplus.cmd.commands.*;
 import com.gmail.favorlock.bungeechatplus.config.BungeeChatPlusConfig;
 import com.gmail.favorlock.bungeechatplus.listeners.ChatListener;
 import com.gmail.favorlock.bungeechatplus.listeners.PluginMessageListener;
-
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.logging.Level;
 
 public class BungeeChatPlus extends Plugin {
 	
@@ -91,6 +86,32 @@ public class BungeeChatPlus extends Plugin {
 		getCommandHandler().addCommand(new List(this));
 		getCommandHandler().addCommand(new PrivateMessage(this));
 	}
+
+    public void logToFile(String message) {
+        try
+        {
+            File dataFolder = getDataFolder();
+            if(!dataFolder.exists())
+            {
+                dataFolder.mkdir();
+            }
+
+            File saveTo = new File(getDataFolder(), "plugin.log");
+            if (!saveTo.exists())
+            {
+                saveTo.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(saveTo, true);
+            PrintWriter pw = new PrintWriter(fw);
+
+            pw.println(message);
+            pw.flush();
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	private void registerChannels() {
 		getProxyServer().registerChannel("BungeeChatPlus");

@@ -1,14 +1,14 @@
 package com.gmail.favorlock.bungeechatplus;
 
+import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
+import com.gmail.favorlock.bungeechatplus.entities.Channel;
+import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
-import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
-import com.gmail.favorlock.bungeechatplus.entities.Channel;
-import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 
 public class ChatterManager {
 	
@@ -48,6 +48,11 @@ public class ChatterManager {
 	
 	public void update(String name) {
 		Chatter chatter = getChatter(name);
+
+        if (chatter == null) {
+            return;
+        }
+
 		ChatterStorage storage = chatter.getChatterStorage();
 		List<Channel> channels = chatter.getChannels();
 		ArrayList<String> channels2 = new ArrayList<String>();

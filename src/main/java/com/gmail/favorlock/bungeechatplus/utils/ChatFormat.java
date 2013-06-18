@@ -1,10 +1,9 @@
 package com.gmail.favorlock.bungeechatplus.utils;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatFormat {
 	

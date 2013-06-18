@@ -2,11 +2,10 @@ package testing;
 
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.ChatterManager;
-
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.PluginDescription;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 public abstract class BaseUnit {
 	

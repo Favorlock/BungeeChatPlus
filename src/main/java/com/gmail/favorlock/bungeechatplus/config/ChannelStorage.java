@@ -1,9 +1,9 @@
 package com.gmail.favorlock.bungeechatplus.config;
 
-import java.io.File;
+import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import net.craftminecraft.bungee.bungeeyaml.supereasyconfig.Config;
 
-import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
+import java.io.File;
 
 public class ChannelStorage extends Config {
 	

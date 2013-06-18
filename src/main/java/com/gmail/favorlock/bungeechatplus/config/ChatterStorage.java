@@ -1,10 +1,10 @@
 package com.gmail.favorlock.bungeechatplus.config;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import net.craftminecraft.bungee.bungeeyaml.supereasyconfig.Config;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class ChatterStorage extends Config {
 	

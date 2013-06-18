@@ -1,13 +1,13 @@
 package com.gmail.favorlock.bungeechatplus.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.ChatEvent;
-
 import com.gmail.favorlock.bungeechatplus.config.ChannelStorage;
 import com.gmail.favorlock.bungeechatplus.utils.ChatFormat;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.ChatEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Channel {
 	

@@ -3,17 +3,9 @@ package testing.commands;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testing.BaseUnit;
 
 // Let's import Mockito statically so that the code looks clearer
-import static org.mockito.Mockito.*;
-
-import com.gmail.favorlock.bungeechatplus.cmd.commands.Verbose;
-import com.gmail.favorlock.bungeechatplus.config.BungeeChatPlusConfig;
-import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
-import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 
 @RunWith(PowerMockRunner.class)
 public class VerboseTest extends BaseUnit {

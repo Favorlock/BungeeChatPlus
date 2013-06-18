@@ -1,15 +1,10 @@
 package com.gmail.favorlock.bungeechatplus.cmd;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
-
 import net.md_5.bungee.api.CommandSender;
+
+import java.util.*;
 
 public class CommandHandler {
 	

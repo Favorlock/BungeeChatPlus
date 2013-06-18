@@ -1,13 +1,10 @@
 package com.gmail.favorlock.bungeechatplus;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.gmail.favorlock.bungeechatplus.config.ChannelStorage;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
+
+import java.io.File;
+import java.util.*;
 
 public class ChannelManager {
 	

@@ -1,7 +1,6 @@
 package com.gmail.favorlock.bungeechatplus.cmd.commands;
 
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
-
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 

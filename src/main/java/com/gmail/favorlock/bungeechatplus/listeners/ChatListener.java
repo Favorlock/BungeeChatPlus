@@ -1,8 +1,5 @@
 package com.gmail.favorlock.bungeechatplus.listeners;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
@@ -13,6 +10,9 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class ChatListener implements Listener {
 	

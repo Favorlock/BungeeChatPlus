@@ -1,8 +1,9 @@
 package com.gmail.favorlock.bungeechatplus.entities;
 
+import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
 
 public class Chatter {
 	

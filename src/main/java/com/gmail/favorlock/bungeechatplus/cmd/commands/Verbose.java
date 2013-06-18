@@ -1,12 +1,11 @@
 package com.gmail.favorlock.bungeechatplus.cmd.commands;
 
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.cmd.BaseCommand;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Verbose extends BaseCommand {
 	
