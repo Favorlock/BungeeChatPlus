@@ -4,10 +4,7 @@ import com.gmail.favorlock.bungeechatplus.config.ChatterStorage;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ChatterManager {
@@ -50,6 +47,17 @@ public class ChatterManager {
 		Chatter chatter = getChatter(name);
 
         if (chatter == null) {
+            plugin.getLogger().log(Level.INFO, "Logging chatters map to plugin.log!");
+            plugin.logToFile("Chatter instance for " + name + " is null!");
+            plugin.logToFile("Chatters map will now be displayed:");
+            for (String user : chatters.keySet()) {
+                boolean value = false;
+                if (chatters.get(user) == null) {
+                    value = true;
+                }
+                plugin.logToFile("User: " + user + " | Chatter Null: " + value);
+            }
+            plugin.getLogger().log(Level.INFO, "Logging complete!\nPlease send plugin.log to Favorlock!");
             return;
         }
 
