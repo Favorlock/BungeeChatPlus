@@ -43,47 +43,60 @@ public class ChatListener implements Listener {
 				return;
 			}
 		}
-		
+
 		if (plugin.getConfig().Settings_EnableRegex) {
+            plugin.logToFile("Regex Processing Starting");
 			plugin.getRegexManager().filterChat(event);
+            plugin.logToFile(("Regex Processing Complete"));
 		}
 		
 		String message = event.getMessage();
+        plugin.logToFile("Message: " + message);
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
+        plugin.logToFile("Sender: " + sender.getName());
 		
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
-		
-		if (chatter == null) {
-			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Chatter @ " + sender.getName() +
-					"\nPlease send a copy of all files and the user name above to Favorlock.");
-			return;
-		}
-		
-		Channel channel = chatter.getActiveChannel();
 
-        if (chatter.getPrefix() != null) {
-            if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
+        if (chatter == null) {
+            plugin.logToFile("Chatter object for " + sender.getName() + "is null!");
+            plugin.logToFile("ChatListener.java | Line 64");
+
+            if (ProxyServer.getInstance().getPlayers().contains(sender)) {
+                plugin.getChatterManager().loadChatter(sender.getName());
                 return;
             }
         }
 
+        if (!(chatter.getPrefix() == null)) {
+            plugin.logToFile("Checking if player is Jailed!");
+            if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
+                plugin.logToFile("Player " + sender.getName() + " is jailed!");
+                return;
+            }
+        }
+
+        Channel channel = chatter.getActiveChannel();
+        plugin.logToFile("Active Channel: " + chatter.getActiveChannel().getName());
+
 		if (channel == null) {
-			ProxyServer.getInstance().getLogger().log(Level.INFO, "Null Channel @ " + chatter.getName() +
-					"\nPlease send a copy of all files and the user name above to Favorlock.");
-			
+            plugin.logToFile("Channel object for " + chatter.getActiveChannel().getName() + "is null!");
+            plugin.logToFile("ChatListener.java | Line 76");
 			return;
 		}
-		
+
+        plugin.logToFile("Sending message to channel " + chatter.getActiveChannel().getName());
 		channel.sendMessage(event, message);
 	}
 	
 	@EventHandler
 	public void onPlayerLogin(PostLoginEvent event) {
+        plugin.logToFile("Player connecting: " + event.getPlayer().getName());
 		plugin.getChatterManager().loadChatter(event.getPlayer().getName());
 	}
 	
 	@EventHandler
 	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
+        plugin.logToFile("Player disconnecting: " + event.getPlayer().getName());
 		plugin.getChatterManager().update(event.getPlayer().getName());
 	}
 
