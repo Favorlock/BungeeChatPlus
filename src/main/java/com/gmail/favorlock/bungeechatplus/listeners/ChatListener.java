@@ -54,17 +54,23 @@ public class ChatListener implements Listener {
         plugin.logToFile("Message: " + message);
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
         plugin.logToFile("Sender: " + sender.getName());
-		
-		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 
-        if (chatter == null) {
+        if (plugin.getChatterManager().getChatter(sender.getName()) == null) {
             plugin.logToFile("Chatter object for " + sender.getName() + "is null!");
-            plugin.logToFile("ChatListener.java | Line 64");
-
-            if (ProxyServer.getInstance().getPlayers().contains(sender)) {
+            if (plugin.getProxyServer().getPlayers().contains(sender.getName())) {
+                plugin.logToFile("Loading chatter!");
                 plugin.getChatterManager().loadChatter(sender.getName());
+            } else {
+                plugin.logToFile("Chatter is not online!");
                 return;
             }
+        }
+
+        Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
+
+        if (chatter == null) {
+            plugin.logToFile("Chatter is still null... How is this possible!");
+            return;
         }
 
         if (!(chatter.getPrefix() == null)) {
@@ -85,7 +91,7 @@ public class ChatListener implements Listener {
 		}
 
         plugin.logToFile("Sending message to channel " + chatter.getActiveChannel().getName());
-		channel.sendMessage(event, message);
+		channel.sendMessage(sender, message);
 	}
 	
 	@EventHandler
