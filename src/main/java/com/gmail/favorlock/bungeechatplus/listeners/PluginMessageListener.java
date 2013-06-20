@@ -61,7 +61,7 @@ public class PluginMessageListener implements Listener {
 			
 			Channel chatChannel = chatter.getActiveChannel();
 			
-			chatChannel.sendMessage(chatevent, message);
+			chatChannel.sendMessage(player, message);
 		}
 		if (channel.equalsIgnoreCase("Broadcast")) {
 			String message = in.readUTF();
