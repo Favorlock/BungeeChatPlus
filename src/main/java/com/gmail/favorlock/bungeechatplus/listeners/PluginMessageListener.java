@@ -30,9 +30,26 @@ public class PluginMessageListener implements Listener {
 		}
 		DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getData()));
 		String channel = in.readUTF();
+
 		if (channel.equalsIgnoreCase("VaultAffix")) {
-			String player = in.readUTF();
-			Chatter chatter = plugin.getChatterManager().getChatter(player);
+			ProxiedPlayer player = plugin.getProxyServer().getPlayer(in.readUTF());
+
+            if (player == null) {
+                return;
+            }
+
+            if (plugin.getChatterManager().getChatter(player.getName()) == null) {
+                plugin.logToFile("Chatter object for " + player + "is null!");
+                if (plugin.getProxyServer().getPlayers().contains(player)) {
+                    plugin.logToFile("Loading chatter!");
+                    plugin.getChatterManager().loadChatter(player.getName());
+                } else {
+                    plugin.logToFile("Chatter is not online!");
+                    return;
+                }
+            }
+
+			Chatter chatter = plugin.getChatterManager().getChatter(player.getName());
 			
 			if (chatter == null) {
 				return;
@@ -41,17 +58,34 @@ public class PluginMessageListener implements Listener {
 			chatter.setPrefix(in.readUTF());
 			chatter.setSuffix(in.readUTF());
 		}
+
 		if (channel.equalsIgnoreCase("FactionChat")) {
 			String name = in.readUTF();
 			String message = in.readUTF();
 			ProxiedPlayer player = null;
+
+            for (ProxiedPlayer players : plugin.getPlayers()) {
+                if (name.equalsIgnoreCase(players.getName())) {
+                    player = players;
+                }
+            }
+
+            if (player == null) {
+                return;
+            }
+
+            if (plugin.getChatterManager().getChatter(player.getName()) == null) {
+                plugin.logToFile("Chatter object for " + player.getName() + "is null!");
+                if (plugin.getProxyServer().getPlayers().contains(player)) {
+                    plugin.logToFile("Loading chatter!");
+                    plugin.getChatterManager().loadChatter(player.getName());
+                } else {
+                    plugin.logToFile("Chatter is not online!");
+                    return;
+                }
+            }
+
 			Chatter chatter = plugin.getChatterManager().getChatter(name);
-			
-			for (ProxiedPlayer players : plugin.getPlayers()) {
-				if (name.equalsIgnoreCase(players.getName())) {
-					player = players;
-				}
-			}
 			
 			ChatEvent chatevent = new ChatEvent(player, event.getReceiver(), message);
 			
@@ -63,6 +97,7 @@ public class PluginMessageListener implements Listener {
 			
 			chatChannel.sendMessage(player, message);
 		}
+
 		if (channel.equalsIgnoreCase("Broadcast")) {
 			String message = in.readUTF();
 			

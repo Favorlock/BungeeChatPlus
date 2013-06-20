@@ -3,7 +3,6 @@ package com.gmail.favorlock.bungeechatplus.listeners;
 import com.gmail.favorlock.bungeechatplus.BungeeChatPlus;
 import com.gmail.favorlock.bungeechatplus.entities.Channel;
 import com.gmail.favorlock.bungeechatplus.entities.Chatter;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -12,7 +11,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class ChatListener implements Listener {
 	
@@ -57,7 +55,7 @@ public class ChatListener implements Listener {
 
         if (plugin.getChatterManager().getChatter(sender.getName()) == null) {
             plugin.logToFile("Chatter object for " + sender.getName() + "is null!");
-            if (plugin.getProxyServer().getPlayers().contains(sender.getName())) {
+            if (plugin.getProxyServer().getPlayers().contains(sender)) {
                 plugin.logToFile("Loading chatter!");
                 plugin.getChatterManager().loadChatter(sender.getName());
             } else {
