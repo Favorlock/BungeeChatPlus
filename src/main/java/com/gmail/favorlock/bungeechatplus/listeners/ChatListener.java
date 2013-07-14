@@ -43,23 +43,16 @@ public class ChatListener implements Listener {
 		}
 
 		if (plugin.getConfig().Settings_EnableRegex) {
-            plugin.logToFile("Regex Processing Starting");
 			plugin.getRegexManager().filterChat(event);
-            plugin.logToFile(("Regex Processing Complete"));
 		}
 		
 		String message = event.getMessage();
-        plugin.logToFile("Message: " + message);
 		ProxiedPlayer sender = (ProxiedPlayer)event.getSender();
-        plugin.logToFile("Sender: " + sender.getName());
 
         if (plugin.getChatterManager().getChatter(sender.getName()) == null) {
-            plugin.logToFile("Chatter object for " + sender.getName() + "is null!");
             if (plugin.getProxyServer().getPlayers().contains(sender)) {
-                plugin.logToFile("Loading chatter!");
                 plugin.getChatterManager().loadChatter(sender.getName());
             } else {
-                plugin.logToFile("Chatter is not online!");
                 return;
             }
         }
@@ -67,40 +60,31 @@ public class ChatListener implements Listener {
         Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 
         if (chatter == null) {
-            plugin.logToFile("Chatter is still null... How is this possible!");
             return;
         }
 
         if (!(chatter.getPrefix() == null)) {
-            plugin.logToFile("Checking if player is Jailed!");
             if (chatter.getPrefix().equals(plugin.getConfig().JailGroupPrefix)) {
-                plugin.logToFile("Player " + sender.getName() + " is jailed!");
                 return;
             }
         }
 
         Channel channel = chatter.getActiveChannel();
-        plugin.logToFile("Active Channel: " + chatter.getActiveChannel().getName());
 
 		if (channel == null) {
-            plugin.logToFile("Channel object for " + chatter.getActiveChannel().getName() + "is null!");
-            plugin.logToFile("ChatListener.java | Line 76");
 			return;
 		}
 
-        plugin.logToFile("Sending message to channel " + chatter.getActiveChannel().getName());
 		channel.sendMessage(sender, message);
 	}
 	
 	@EventHandler
 	public void onPlayerLogin(PostLoginEvent event) {
-        plugin.logToFile("Player connecting: " + event.getPlayer().getName());
 		plugin.getChatterManager().loadChatter(event.getPlayer().getName());
 	}
 	
 	@EventHandler
 	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
-        plugin.logToFile("Player disconnecting: " + event.getPlayer().getName());
 		plugin.getChatterManager().update(event.getPlayer().getName());
 	}
 

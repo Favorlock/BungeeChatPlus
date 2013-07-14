@@ -39,12 +39,9 @@ public class PluginMessageListener implements Listener {
             }
 
             if (plugin.getChatterManager().getChatter(player.getName()) == null) {
-                plugin.logToFile("Chatter object for " + player + "is null!");
                 if (plugin.getProxyServer().getPlayers().contains(player)) {
-                    plugin.logToFile("Loading chatter!");
                     plugin.getChatterManager().loadChatter(player.getName());
                 } else {
-                    plugin.logToFile("Chatter is not online!");
                     return;
                 }
             }
@@ -75,12 +72,9 @@ public class PluginMessageListener implements Listener {
             }
 
             if (plugin.getChatterManager().getChatter(player.getName()) == null) {
-                plugin.logToFile("Chatter object for " + player.getName() + "is null!");
                 if (plugin.getProxyServer().getPlayers().contains(player)) {
-                    plugin.logToFile("Loading chatter!");
                     plugin.getChatterManager().loadChatter(player.getName());
                 } else {
-                    plugin.logToFile("Chatter is not online!");
                     return;
                 }
             }
