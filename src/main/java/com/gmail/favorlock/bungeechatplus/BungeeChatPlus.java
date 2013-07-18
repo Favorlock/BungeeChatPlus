@@ -18,6 +18,9 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.logging.Level;
 
+/**
+ * @author Favorlock
+ */
 public class BungeeChatPlus extends Plugin {
 	
 	private final CommandHandler commandHandler = new CommandHandler(this);
