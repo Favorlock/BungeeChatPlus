@@ -6,7 +6,7 @@ import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import net.md_5.bungee.api.CommandSender;
 
 public class Create extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public Create(BungeeChatPlus plugin) {
@@ -20,9 +20,8 @@ public class Create extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
-		if(plugin.getChannelManager().addChannel(args[0])) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
+		if (plugin.getChannelManager().addChannel(args[0])) {
 			sender.sendMessage(FontFormat.translateString("&eThe channel has been created!"));
 			return true;
 		}

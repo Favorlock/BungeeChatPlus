@@ -9,7 +9,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Leave extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public Leave(BungeeChatPlus plugin) {
@@ -23,8 +23,7 @@ public class Leave extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
 		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
@@ -37,7 +36,7 @@ public class Leave extends BaseCommand {
 			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
 			return false;
 		}
-		if(chatter.removeChannel(channel)) {
+		if (chatter.removeChannel(channel)) {
 			channel.getChatters().remove(chatter);
 			sender.sendMessage(FontFormat.translateString("&eYou are no longer in channel &2" + channel.getName()));
 			return true;
