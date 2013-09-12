@@ -107,11 +107,11 @@ public class Channel {
 							}
 						}
 					}
-				} else {
-					if (storage.getPlugin().getConfig().formatLocalChat) {
-						if ((player.getServer().getInfo().getName().equals(player.getServer().getInfo().getName())) && (sender.getServer().getInfo().getName().equals(player.getServer().getInfo().getName()))) {
+				}
+				if (storage.getPlugin().getConfig().formatLocalChat) {
+					if ((sender.getServer().getInfo().getName().equals(player.getServer().getInfo().getName()))) {
+						if (!chatter.getVerbose())
 							player.sendMessage(FontFormat.translateString(message));
-						}
 					}
 				}
 
