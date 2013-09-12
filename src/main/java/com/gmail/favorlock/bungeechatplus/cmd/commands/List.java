@@ -7,7 +7,7 @@ import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import net.md_5.bungee.api.CommandSender;
 
 public class List extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public List(BungeeChatPlus plugin) {
@@ -21,18 +21,14 @@ public class List extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
-		sender.sendMessage(FontFormat.translateString("&a-----------------------------------------------------\n" +
-				"&eChannels"));
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
+		sender.sendMessage(FontFormat.translateString("&a-----------------------------------------------------\n" + "&eChannels"));
 
 		for (Channel channel : plugin.getChannelManager().getChannels()) {
 			if (!(channel.getMaxChatters() == -1)) {
-				sender.sendMessage(FontFormat.translateString("&a" + channel.getName() + " &8-&7 " +
-						channel.getChatters().size() + "&8/&7" + channel.getMaxChatters()));
+				sender.sendMessage(FontFormat.translateString("&a" + channel.getName() + " &8-&7 " + channel.getChatters().size() + "&8/&7" + channel.getMaxChatters()));
 			} else {
-				sender.sendMessage(FontFormat.translateString("&a" + channel.getName() + " &8-&7 " +
-						channel.getChatters().size() + "&8/&7" + Character.toString('\u221E')));
+				sender.sendMessage(FontFormat.translateString("&a" + channel.getName() + " &8-&7 " + channel.getChatters().size() + "&8/&7" + Character.toString('\u221E')));
 			}
 		}
 

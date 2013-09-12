@@ -8,7 +8,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Verbose extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public Verbose(BungeeChatPlus plugin) {
@@ -22,14 +22,13 @@ public class Verbose extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
-		if(!(sender instanceof ProxiedPlayer)) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
+		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
 		Chatter chatter = plugin.getChatterManager().getChatter(sender.getName());
 		chatter.setVerbose();
-		if(chatter.getVerbose() == true) {
+		if (chatter.getVerbose() == true) {
 			sender.sendMessage(FontFormat.translateString("&7You are now talking in &2Global Chat"));
 			return true;
 		} else {

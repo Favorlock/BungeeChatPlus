@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chatter {
-	
+
 	private final ChatterStorage storage;
 	private final String name;
 	private boolean verbose;
@@ -14,12 +14,12 @@ public class Chatter {
 	private List<Channel> channels;
 	private String prefix;
 	private String suffix;
-	
+
 	public Chatter(String name, ChatterStorage storage) {
 		this.storage = storage;
 		this.name = name;
 		this.activeChannel = storage.getPlugin().getChannelManager().getChannel(storage.ActiveChannel);
-		
+
 		if (this.channels == null) {
 			this.channels = new ArrayList<Channel>();
 		}
@@ -29,25 +29,25 @@ public class Chatter {
 			setActiveChannel(storage.getPlugin().getChannelManager().defaultChannel);
 		}
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public void setVerbose() {
 		this.verbose = !verbose;
 	}
-	
+
 	public void setVerbose(boolean bool) {
 		this.verbose = bool;
 	}
-	
+
 	public boolean getVerbose() {
 		return this.verbose;
 	}
-	
+
 	public boolean setActiveChannel(Channel channel) {
-		if(!this.channels.contains(channel)){
+		if (!this.channels.contains(channel)) {
 			addChannel(channel);
 			channel.addChatter(this);
 		}
@@ -57,7 +57,7 @@ public class Chatter {
 		}
 		return false;
 	}
-	
+
 	public boolean addChannel(Channel channel) {
 		if (!channels.contains(channel)) {
 			channels.add(channel);
@@ -66,11 +66,11 @@ public class Chatter {
 		}
 		return false;
 	}
-	
+
 	public boolean removeChannel(Channel channel) {
 		if (channels.contains(channel)) {
 			channels.remove(channel);
-			
+
 			if (channel.equals(activeChannel)) {
 				if (channels.size() > 0) {
 					setActiveChannel(channels.get(0));
@@ -82,35 +82,35 @@ public class Chatter {
 		}
 		return false;
 	}
-	
+
 	public Channel getActiveChannel() {
 		return this.activeChannel;
 	}
-	
+
 	public void setChannels(List<Channel> channels) {
 		this.channels = channels;
 	}
-	
+
 	public List<Channel> getChannels() {
 		return this.channels;
 	}
-	
+
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 	}
-	
+
 	public String getPrefix() {
 		return this.prefix;
 	}
-	
+
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
-	
+
 	public String getSuffix() {
 		return this.suffix;
 	}
-	
+
 	public ChatterStorage getChatterStorage() {
 		return this.storage;
 	}

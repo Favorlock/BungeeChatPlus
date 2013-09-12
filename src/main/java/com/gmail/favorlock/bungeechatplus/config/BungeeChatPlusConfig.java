@@ -23,5 +23,6 @@ public class BungeeChatPlusConfig extends Config {
 	public ArrayList<String> Settings_LocalChatOnServer = new ArrayList<String>();
 	public ArrayList<String> FactionServers = new ArrayList<String>();
 	public String JailGroupPrefix = "Jailed";
+	public boolean formatLocalChat = false;
 
 }
