@@ -7,9 +7,9 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class PrivateMessage extends BaseCommand {
-	
+
 	private BungeeChatPlus plugin;
-	
+
 	public PrivateMessage(BungeeChatPlus plugin) {
 		super("BCP PM");
 		this.plugin = plugin;
@@ -21,10 +21,9 @@ public class PrivateMessage extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
 		ProxiedPlayer player = plugin.getProxyServer().getPlayer(args[0]);
-		
+
 		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
@@ -33,20 +32,19 @@ public class PrivateMessage extends BaseCommand {
 				sender.sendMessage(FontFormat.translateString("&7You cannot send a pm to yourself"));
 				return false;
 			}
-			
+
 			String message = "";
-		
+
 			for (int counter = 1; counter < args.length; counter++) {
 				message += args[counter] + " ";
 			}
-		
+
 			message = message.trim();
-		
-			player.sendMessage(FontFormat.translateString("&6" + sender.getName() +
-					" &8 -> &6You&8:&7 " + message));
+
+			player.sendMessage(FontFormat.translateString("&6" + sender.getName() + " &8 -> &6You&8:&7 " + message));
 			return true;
 		}
-		sender.sendMessage(FontFormat.translateString("&6"+ args[0] + " &7is not online"));
+		sender.sendMessage(FontFormat.translateString("&6" + args[0] + " &7is not online"));
 		return false;
 	}
 

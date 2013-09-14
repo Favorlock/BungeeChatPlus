@@ -5,7 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class BCP extends Command {
-	
+
 	BungeeChatPlus plugin;
 
 	public BCP(BungeeChatPlus plugin) {

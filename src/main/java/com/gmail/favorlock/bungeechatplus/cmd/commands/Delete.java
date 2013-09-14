@@ -6,7 +6,7 @@ import com.gmail.favorlock.bungeechatplus.utils.FontFormat;
 import net.md_5.bungee.api.CommandSender;
 
 public class Delete extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public Delete(BungeeChatPlus plugin) {
@@ -20,9 +20,8 @@ public class Delete extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
-		if(plugin.getChannelManager().removeChannel(args[0])) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
+		if (plugin.getChannelManager().removeChannel(args[0])) {
 			sender.sendMessage(FontFormat.translateString("&eThe channel has been deleted!"));
 			return true;
 		}

@@ -9,7 +9,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Focus extends BaseCommand {
-	
+
 	BungeeChatPlus plugin;
 
 	public Focus(BungeeChatPlus plugin) {
@@ -23,8 +23,7 @@ public class Focus extends BaseCommand {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String identifier,
-			String[] args) {
+	public boolean execute(CommandSender sender, String identifier, String[] args) {
 		if (!(sender instanceof ProxiedPlayer)) {
 			return false;
 		}
@@ -37,12 +36,10 @@ public class Focus extends BaseCommand {
 			sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e does not exist"));
 			return false;
 		}
-		
-		if (sender.hasPermission("bungeechat.channels.*") || 
-				sender.hasPermission("bungeechat.channels." + channel.getName().toLowerCase())) {
+
+		if (sender.hasPermission("bungeechat.channels.*") || sender.hasPermission("bungeechat.channels." + channel.getName().toLowerCase())) {
 			if (!channel.getPassword().equals("") && !(args.length == 2)) {
-				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] 
-						+ "&e is password protected"));
+				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is password protected"));
 				return false;
 			}
 			if (!channel.getPassword().equals("") && (args.length == 2)) {
@@ -52,8 +49,7 @@ public class Focus extends BaseCommand {
 				}
 			}
 			boolean inChannel = channel.getChatters().contains(chatter);
-			if ((channel.getChatters().size() >= channel.getMaxChatters()) && !(channel.getMaxChatters() == -1)
-					&& !inChannel) {
+			if ((channel.getChatters().size() >= channel.getMaxChatters()) && !(channel.getMaxChatters() == -1) && !inChannel) {
 				sender.sendMessage(FontFormat.translateString("&eThe channel &2" + args[0] + "&e is full"));
 				return false;
 			}
@@ -62,15 +58,14 @@ public class Focus extends BaseCommand {
 				sender.sendMessage(FontFormat.translateString("&4You are in the maximum number of channels"));
 				return false;
 			}
-			if(plugin.getChatterManager().getChatter(sender.getName()).setActiveChannel(channel)) {
+			if (plugin.getChatterManager().getChatter(sender.getName()).setActiveChannel(channel)) {
 				sender.sendMessage(FontFormat.translateString("&eYou are now talking in &2" + channel.getName()));
 				return true;
 			}
 			sender.sendMessage(FontFormat.translateString("&2You are already talking in &2" + channel.getName()));
 			return false;
 		} else {
-			sender.sendMessage(FontFormat.translateString("&4You do not have permission to join &7" +
-					channel.getName()));
+			sender.sendMessage(FontFormat.translateString("&4You do not have permission to join &7" + channel.getName()));
 			return false;
 		}
 	}
